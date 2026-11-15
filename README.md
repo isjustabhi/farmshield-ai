@@ -112,6 +112,9 @@ After push to `main`, Actions deploys the Vite UI here (not your portfolio domai
 Do **not** use `isjustabhi.com/farmshield-ai` — that domain is your Vercel portfolio.  
 Repo → Settings → Pages → Source: **GitHub Actions**.
 
+Without the API, Pages loads a **static example snapshot** (fleet mid-run, farm radio, traces).  
+Controls need FastAPI locally for a live sim.
+
 ## How to trigger incidents
 
 | Action | UI | API |

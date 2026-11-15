@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { loadExampleSnapshot } from '../demo/loadExampleSnapshot'
 import { api } from '../services/api'
 import type {
   AgentMetrics,
@@ -15,6 +16,9 @@ import type {
   SimEvent,
   SimulationState,
 } from '../types/api'
+
+const EXAMPLE_NOTE =
+  'Example preview (static). Start FastAPI on :8000 for a live interactive fleet.'
 
 interface FleetData {
   connection: ApiConnectionState
@@ -67,6 +71,29 @@ export function useFleetData(pollMs = 800): FleetData {
   const [busy, setBusy] = useState(false)
   const [lastChaos, setLastChaos] = useState<ChaosEventResult | null>(null)
   const mounted = useRef(true)
+  const connectionRef = useRef<ApiConnectionState>('checking')
+  const hasExampleRef = useRef(false)
+
+  const applyExample = useCallback(async () => {
+    const snap = await loadExampleSnapshot()
+    if (!mounted.current) return
+    setState(snap.state)
+    setEvents([...snap.events].reverse())
+    setDecisions(snap.decisions)
+    setRecoveryLogs([...snap.recoveryLogs].reverse())
+    setTraces([...snap.traces].reverse())
+    setMetrics(snap.metrics)
+    setDialogues([...snap.dialogues].reverse())
+    setLlmStatus(snap.llmStatus)
+    setAgopenweb(snap.agopenweb)
+    setIncidents(snap.incidents)
+    setRuns(snap.runs)
+    setCurrentRunId(snap.currentRunId)
+    setConnection('example')
+    connectionRef.current = 'example'
+    hasExampleRef.current = true
+    setError(EXAMPLE_NOTE)
+  }, [])
 
   const refresh = useCallback(async () => {
     try {
@@ -99,7 +126,6 @@ export function useFleetData(pollMs = 800): FleetData {
       setEvents(eventPayload.events.slice(-80).reverse())
       setDecisions(decisionPayload.decisions)
       setRecoveryLogs(recovery.logs.slice().reverse())
-      // Keep enough traces so multi-step handshakes (Nav+Safety) are not cut mid-pair
       setTraces(tracePayload.traces.slice(-120).reverse())
       setMetrics(metricPayload)
       setDialogues(llmPayload.dialogues.slice().reverse())
@@ -108,18 +134,34 @@ export function useFleetData(pollMs = 800): FleetData {
       setRuns(runPayload.runs)
       setCurrentRunId(runPayload.current_run_id)
       setConnection('connected')
+      connectionRef.current = 'connected'
+      hasExampleRef.current = false
       setError(null)
-    } catch (err) {
+    } catch {
       if (!mounted.current) return
-      setConnection('disconnected')
-      setError(err instanceof Error ? err.message : 'API unavailable')
+      if (hasExampleRef.current) return
+      try {
+        await applyExample()
+      } catch {
+        if (!mounted.current) return
+        setConnection('disconnected')
+        connectionRef.current = 'disconnected'
+        setError('API unavailable and example snapshot failed to load.')
+      }
     }
-  }, [])
+  }, [applyExample])
 
   useEffect(() => {
     mounted.current = true
     void refresh()
     const id = window.setInterval(() => {
+      if (connectionRef.current === 'example') {
+        void api
+          .getHealth()
+          .then(() => refresh())
+          .catch(() => undefined)
+        return
+      }
       void refresh()
     }, pollMs)
     return () => {
@@ -128,8 +170,16 @@ export function useFleetData(pollMs = 800): FleetData {
     }
   }, [pollMs, refresh])
 
+  const exampleBlocked = useCallback(async () => {
+    setError(EXAMPLE_NOTE)
+  }, [])
+
   const runAction = useCallback(
     async (action: () => Promise<unknown>) => {
+      if (connectionRef.current === 'example') {
+        await exampleBlocked()
+        return
+      }
       setBusy(true)
       try {
         await action()
@@ -140,11 +190,15 @@ export function useFleetData(pollMs = 800): FleetData {
         setBusy(false)
       }
     },
-    [refresh],
+    [exampleBlocked, refresh],
   )
 
   const runChaos = useCallback(
     async (action: () => Promise<ChaosEventResult>) => {
+      if (connectionRef.current === 'example') {
+        await exampleBlocked()
+        return null
+      }
       setBusy(true)
       try {
         const result = await action()
@@ -158,7 +212,7 @@ export function useFleetData(pollMs = 800): FleetData {
         setBusy(false)
       }
     },
-    [refresh],
+    [exampleBlocked, refresh],
   )
 
   return {

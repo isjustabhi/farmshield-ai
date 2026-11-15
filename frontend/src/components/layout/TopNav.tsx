@@ -37,6 +37,9 @@ export function TopNav({
     state?.tractors.filter((t) => t.status === 'traveling' || t.status === 'working').length ?? 0
   const completed = state?.jobs.filter((j) => j.status === 'completed').length ?? 0
   const healthOk = connection === 'connected'
+  const example = connection === 'example'
+  const systemLabel = healthOk ? 'Healthy' : example ? 'Example' : 'Offline'
+  const systemTone = healthOk || example ? 'ok' : 'bad'
 
   return (
     <header className="fs-glass flex flex-wrap items-center gap-4 rounded-none border-x-0 border-t-0 px-5 py-3">
@@ -51,9 +54,10 @@ export function TopNav({
         <Metric label="Sim time" value={state ? `t=${state.sim_time}m` : '—'} />
         <Metric
           label="System"
-          value={healthOk ? 'Healthy' : 'Offline'}
-          icon={healthOk ? <Wifi size={12} /> : <WifiOff size={12} />}
-          tone={healthOk ? 'ok' : 'bad'}
+          value={systemLabel}
+          icon={healthOk || example ? <Wifi size={12} /> : <WifiOff size={12} />}
+          tone={systemTone}
+          title={example ? 'Static preview snapshot — start API for live control' : undefined}
         />
         <Metric
           label="AgOpenWeb"

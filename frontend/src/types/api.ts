@@ -4,7 +4,7 @@ export interface HealthResponse {
   version: string
 }
 
-export type ApiConnectionState = 'checking' | 'connected' | 'disconnected'
+export type ApiConnectionState = 'checking' | 'connected' | 'disconnected' | 'example'
 
 export type AgOpenWebStatus = 'connected' | 'disconnected' | 'unsupported'
 

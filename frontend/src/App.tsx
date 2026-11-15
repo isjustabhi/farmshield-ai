@@ -34,7 +34,13 @@ export default function App() {
 
         <main className="flex-1 space-y-4 overflow-auto p-4 md:p-5">
           {fleet.error && (
-            <div className="rounded-lg border border-[var(--fs-red)]/40 bg-[var(--fs-red-dim)] px-4 py-3 text-sm text-red-100">
+            <div
+              className={`rounded-lg px-4 py-3 text-sm ${
+                fleet.connection === 'example'
+                  ? 'border border-amber-500/30 bg-amber-500/10 text-amber-100'
+                  : 'border border-[var(--fs-red)]/40 bg-[var(--fs-red-dim)] text-red-100'
+              }`}
+            >
               {fleet.error}
             </div>
           )}
