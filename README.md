@@ -1,76 +1,97 @@
 # FarmShield AI
 
-Autonomous tractor fleet coordinator for the **American Tractor Company — Run the Fleet** hackathon.
+Autonomous tractor fleet coordinator for the **American Tractor Company: Run the Fleet** hackathon.
 
-We built a working farm command center: tractors get real jobs, agents talk before anything is committed, Safety can say no, and when a machine breaks we keep the work already done. The live UI talks to our FastAPI backend. For incident talk we optionally call **Anthropic Claude** (or another chat API) via `.env` — that’s a real API key you paste locally; it never assigns jobs by itself.
+We built a working farm command center. Tractors get real jobs. Agents talk before anything is committed. Safety can say no. When a machine breaks, we keep the work already done.
 
-Static preview: [https://isjustabhi.github.io/farmshield-ai/](https://isjustabhi.github.io/farmshield-ai/) (example snapshot when the API isn’t running).
+The live UI calls our **FastAPI** backend. For incident talk we optionally call **Anthropic Claude** (API key in `.env`). Claude explains. It does not assign jobs by itself.
+
+Static preview: [https://isjustabhi.github.io/farmshield-ai/](https://isjustabhi.github.io/farmshield-ai/)
 
 ---
 
-## What that old line meant (and what’s true now)
+## APIs we use
 
-Early on we said “no paid APIs / no LLMs” because the **scheduler and Safety loop are deterministic code**, not ChatGPT driving the fleet. That part is still true.
-
-What we use today:
-
-| Piece | What it is |
+| API | Role |
 | --- | --- |
-| FastAPI `/api/*` | Our own backend — the UI always talks to this |
-| Claude (optional) | Incident “farm radio” after breakdowns — explain only |
-| AgOpenWeb | Optional **read-only** `field.geojson` import — not tractor control |
+| Our FastAPI `/api/*` | Live sim, schedule, chaos, metrics. The UI always uses this. |
+| Claude (optional) | After a breakdown, agents talk in plain language about what happened. |
+| AgOpenWeb field file (optional) | Read-only `field.geojson` metadata. Not tractor control. |
 
-So: **we do use APIs**. The important rule is the LLM is the radio, not the dispatcher.
-
----
-
-## The scenario (the farm you’re looking at)
-
-Seeded farm in `backend/data/scenario.json` (`hackathon_demo_v1`, seed 42):
-
-- **20×20 grid**, depot at `(0,0)`, shared fuel rules (travel, work, safety reserve)
-- **8 fields** — North Orchard, East Meadow, River Bend, Center Plot, Homestead Flat, South Ridge, West Pasture, Corner Acre
-- **3 tractors** — Shield-Alpha & Charlie (spraying), Shield-Bravo (mowing)
-- **10 jobs** — mix of spraying/mowing, priorities, deadlines, and dependencies (e.g. mow after spray on the same field)
-
-One sim-minute per tick. Play advances the clock; Schedule runs Fleet → Nav → Safety and commits approved assigns. Chaos Lab can break a tractor, block a cell, or change fuel/priority.
+We use APIs. The rule is simple: **LLM is the radio. Safety is the boss.**
 
 ---
 
-## How the agents communicate
+## The scenario
 
-Think of a radio channel, not a single script that “just assigns.”
+File: `backend/data/scenario.json` (`hackathon_demo_v1`, seed 42)
 
-**Every normal assign**
+| Piece | What you get |
+| --- | --- |
+| Map | 20×20 grid, depot at (0,0) |
+| Fields | 8 named fields (North Orchard, East Meadow, River Bend, Center Plot, and more) |
+| Tractors | Shield-Alpha and Charlie spray. Shield-Bravo mows. |
+| Jobs | 10 jobs with priority, deadlines, and dependencies (mow after spray on the same field) |
+| Fuel | Travel burn, work burn, and a safety reserve that Safety enforces |
 
-1. **Fleet** — “Who should take this job?” (scored matching)
-2. **Fleet → Navigation** — “Can you route this tractor to that field?”
-3. **Nav → Fleet** — path, travel time, fuel estimate (or unreachable)
-4. **Fleet → Safety** — “Is this assign allowed?”
-5. **Safety → Fleet** — Approve or Reject (equipment, fuel+reserve, no double-book, progress rules)
-6. **Only on approve** — job is committed to the simulator
-
-You can see this on the dashboard as **Farm radio** / Agent Network traces (`fleet_agent → navigation_agent → safety_agent`).
-
-**When something goes bad**
-
-1. Sim stops the tractor and **keeps completed work units**
-2. **Recovery** proposes a replan
-3. The same Fleet → Nav → Safety handshake runs again
-4. Optional **Claude agents** (Fleet / Recovery / Safety personas) talk about the incident in plain language — they do **not** bypass Safety
-
-Hops go through **AgentBus** (in-process, with real wall-clock latency logged). That’s orchestration with a veto — not “call a function and hope.”
+One tick = one sim minute. **Schedule** runs orchestration. **Play** moves the farm. **Chaos Lab** can break a tractor or block a path.
 
 ---
 
-## What makes FarmShield stand out
+## AI orchestration (how agents communicate)
 
-1. **Safety is a hard gate** — wrong implement, low fuel, or double-booking never ships, even if Fleet likes the score  
-2. **Agents are visible** — judges can watch the handshake and incident dialogue, not a black-box assign  
-3. **Failures don’t invent progress** — breakdown preserves work; recovery re-validates before reassign  
-4. **Measured, not claimed** — productivity ledger + fair FCFS benchmark on the same seeds/incidents; we report travel/fuel tradeoffs honestly  
-5. **Operational memory** — SQLite keeps runs, incidents, and traces so the story survives a reset  
-6. **Honest AgOpenWeb stance** — we import documented field files when you have them; we don’t fake GPS or cab control  
+Orchestration means **several agents take turns**, each with one job, and the next step waits on the answer. It is not one model that secretly does everything.
+
+### The crew
+
+| Agent | Job |
+| --- | --- |
+| **Fleet** | Picks who should take which job (scored matching) |
+| **Navigation** | Builds an A* path and travel/fuel estimate |
+| **Safety** | Approves or rejects before anything is committed |
+| **Recovery** | After a fault, asks for a replan while keeping preserved work |
+| **Claude personas** (optional) | Talk about the incident so humans can hear the story |
+
+### Normal assign (the handshake)
+
+```
+Fleet:        Who should take this job?
+Fleet → Nav:  Can you route this tractor to that field?
+Nav → Fleet:  Yes. Here is the path, time, and fuel.  (or: unreachable)
+Fleet → Safety: Is this assign allowed?
+Safety → Fleet: Approve.  (or: Reject)
+Fleet → Sim:  Commit only if approved.
+```
+
+If Safety rejects, that pair is skipped. Fleet does not force it through.
+
+You can watch this live on **Command Center / Agent Network** as farm radio lines and AgentBus traces (`fleet_agent → navigation_agent → safety_agent`).
+
+### When something fails
+
+```
+Sim:          Tractor stops. Completed work units are kept.
+Recovery:     We need a replan for the unfinished job.
+Fleet→Nav→Safety: Same handshake as above for a replacement.
+Claude (optional): Fleet / Recovery / Safety talk about the incident.
+```
+
+Claude never overrides Safety. Progress is never invented.
+
+### How the messages are carried
+
+`orchestration.py` uses **AgentBus**: each call has a sender, receiver, request type, response type, status, and timing. Latency is real wall-clock time. Traces go to the UI and SQLite. That is multi-agent orchestration with a recorded conversation, not a hidden function call.
+
+---
+
+## What makes this stand out
+
+1. **Safety is a hard gate.** Wrong implement, low fuel, or double-booking never ships, even if Fleet likes the score.
+2. **Agents are visible.** Judges see the handshake and incident talk, not a black-box assign.
+3. **Failures keep real progress.** Breakdown preserves work. Recovery re-checks Safety before reassign.
+4. **We measure honestly.** Productivity ledger and fair FCFS benchmarks on the same seeds. Travel/fuel tradeoffs are reported, not hidden.
+5. **Memory lasts.** SQLite stores runs, incidents, and traces across resets.
+6. **AgOpenWeb is honest.** We can import a documented field file. We do not fake GPS or cab control.
 
 ---
 
@@ -205,7 +226,7 @@ Controls need FastAPI locally for a live sim.
 
 ## Agent communication design (technical)
 
-`AgentBus` wraps in-process calls with `time.perf_counter()` latency. Each hop records an `AgentTrace` (sender, receiver, request/response types, status, `correlation_id`, optional `decision_id`, simulation timestamp). Transport is explicitly `in_process` — not a fabricated network RPC. Traces persist to SQLite and appear on the Agent Network page / farm radio UI. LLM incident dialogues are separate (`/api/agents/llm/dialogues`) and never commit assigns.
+`AgentBus` wraps in-process calls with `time.perf_counter()` latency. Each hop records an `AgentTrace` (sender, receiver, request/response types, status, `correlation_id`, optional `decision_id`, simulation timestamp). Transport is `in_process`, not a fake network RPC. Traces persist to SQLite and show on Agent Network / farm radio. LLM incident dialogues are separate (`/api/agents/llm/dialogues`) and never commit assigns.
 
 ## Operational memory design
 
