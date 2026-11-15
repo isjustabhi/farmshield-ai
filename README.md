@@ -103,6 +103,8 @@ FarmShield runs a **single authoritative simulator** plus a **Fleet Agent** that
 
 ## Architecture
 
+Full agent/orchestration write-up: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  React Command Center (Vite)                                │
