@@ -1,6 +1,6 @@
-# FarmShield AI — 90-Second Demo Script
+# FarmShield AI: 90-Second Demo Script
 
-Reproducible live demonstration for judges. All UI values come from the running FastAPI simulator — nothing is pre-rendered fake data.
+Live demo for judges. Values come from the running FastAPI simulator.
 
 ## Before you start (once)
 
@@ -18,81 +18,82 @@ Open **http://127.0.0.1:5173** → Command Center. Click **Reset**, then **Sched
 
 ---
 
-## 0–15s — Tractors receive jobs
+## 0–15s: Tractors receive jobs
 
-**Say:** “FarmShield assigns field jobs under hard safety constraints — equipment match, fuel reserve, one job per tractor.”
+**Say:** FarmShield assigns field jobs only after Safety checks equipment, fuel reserve, and one job per tractor.
 
 **Do:**
 1. Reset → Schedule.
-2. Point at the farm grid and Mission Queue: three tractors should own jobs (spraying↔spraying, mowing↔mowing).
-3. Optionally open **Agent Network** briefly to show Nav/Safety calls already logged.
+2. Point at the farm grid: three tractors should own compatible jobs (spray with spray, mow with mow).
+3. Point at **Agents talking** / farm handshake: Fleet asked Nav, then Safety, then commit.
 
-**Expect:** Compatible assignments only; no double-booking.
-
----
-
-## 15–30s — Live movement and progress
-
-**Say:** “The clock is simulated minutes. Tractors travel with A*, then work down real job units and fuel.”
-
-**Do:**
-1. Click **Play** (about 0.4s wall-clock per simulated minute — readable demo pace) or **Step** for full control.
-2. Watch paths animate and job progress bars / completed work units increase.
-3. Glance at the event feed: `travel_start`, `arrival`, `job_start`, `progress_milestone`.
-
-**Expect:** Positions change; fuel drops; progress is fractional and honest.
+**Expect:** Compatible assignments only. No double-booking.
 
 ---
 
-## 30–45s — Judge triggers a tractor failure
+## 15–30s: Live movement and progress
 
-**Say:** “Break a tractor mid-job. We preserve completed work — we do not invent progress.”
+**Say:** The clock is simulated minutes. Tractors travel with A*, then burn real work units and fuel.
 
 **Do:**
-1. Pause if needed so the grid is readable.
-2. On Command Center or **Chaos Lab**, pick a tractor that is **working** (or has clear progress).
+1. Click **Play** (about 0.4s wall-clock per sim minute) or **Step**.
+2. Watch paths and job progress increase.
+3. Glance at the event feed: travel, arrival, job start, progress.
+
+**Expect:** Positions change. Fuel drops. Progress is fractional and honest.
+
+---
+
+## 30–45s: Tractor failure
+
+**Say:** Break a tractor mid-job. We keep completed work. We do not invent progress.
+
+**Do:**
+1. Pause if the grid is hard to read.
+2. On Command Center or **Chaos Lab**, pick a tractor that is **working**.
 3. Click **Breakdown**.
 
-**Expect:** Tractor → `broken`; job released to `pending`; event shows preserved `completed_work_units`.
+**Expect:** Tractor is `broken`. Job goes `pending`. Preserved `completed_work_units` stay on the job.
 
 ---
 
-## 45–60s — Safe recovery and preserved work
+## 45–60s: Safe recovery
 
-**Say:** “Recovery Agent recommends reschedule; Fleet + Nav + Safety re-validate before commit.”
+**Say:** Recovery asks for a replan. Fleet, Nav, and Safety run the same handshake before any reassign.
 
 **Do:**
-1. If auto-recovery already ran, show the recovery explanation in the incident panel.
+1. Show the recovery explanation if it already ran.
 2. Otherwise click **Schedule** / **Replan**.
-3. Highlight the same job id: progress is **≥** the preserved value; a free compatible tractor may pick it up.
+3. Same job id: progress is at least the preserved value. A free compatible tractor may take it. The broken one is not selected.
 
-**Expect:** No progress loss; no unsafe assignment (broken tractor never re-selected).
+**Expect:** No progress loss. No unsafe assign.
 
 ---
 
-## 60–75s — Agent trace and incident memory
+## 60–75s: Agent communication and memory
 
-**Say:** “Every hop is an in-process AgentBus call with real wall-clock latency — not a fake network.”
+**Say:** Orchestration is turn-taking. Fleet proposes, Nav routes, Safety approves or rejects. Each hop is logged with real latency.
 
 **Do:**
-1. Open **Agent Network**: traces show `fleet_agent → navigation_agent` and `→ safety_agent` with durations.
-2. Open **Incident Memory**: breakdown row with preserved work and recovery notes.
-3. Optional: Chaos Lab → **Block route** on an empty cell → show obstacle appear and routes recompute.
+1. Open **Agent Network**: traces show `fleet_agent → navigation_agent` and `→ safety_agent`.
+2. Show incident dialogue if Claude (or fallback) ran after the breakdown.
+3. Open **Incident Memory**: breakdown row with preserved work.
+4. Optional: Chaos Lab → **Block route** → obstacle appears, routes change.
 
 ---
 
-## 75–90s — Measured baseline improvements
+## 75–90s: Measured baseline
 
-**Say:** “Benchmark Lab compares FCFS vs FarmShield on independent sim copies. Numbers are measured.”
+**Say:** Benchmark Lab compares FCFS vs FarmShield on independent sims. These numbers are measured.
 
 **Do:**
 1. Open **Benchmark Lab**.
-2. If results are empty, click **Run benchmark** (or show pre-exported `benchmark_results.json`).
-3. Point at average cards:
-   - Jobs completed / on-time / priority-weighted work **up**
-   - Missed deadlines **down**
-   - Travel / fuel may be **higher** — call that out honestly
-4. Download CSV/JSON if asked.
+2. If empty, click **Run benchmark** (or show `benchmark_results.json`).
+3. Point at averages:
+   - Jobs completed / on-time / priority-weighted work up
+   - Missed deadlines down
+   - Travel / fuel may be higher (say that honestly)
+4. Offer CSV/JSON if asked.
 
 **Measured averages (horizon 300, 1 main + 20 variants):**
 
@@ -108,7 +109,7 @@ Open **http://127.0.0.1:5173** → Command Center. Click **Reset**, then **Sched
 
 ---
 
-## Backup if live UI misbehaves
+## Backup if the UI misbehaves
 
 ```bash
 curl -s -X POST http://127.0.0.1:8000/api/simulation/reset
@@ -121,4 +122,4 @@ curl -s -X POST http://127.0.0.1:8000/api/events/breakdown \
 curl -s http://127.0.0.1:8000/api/events | python -m json.tool | head
 ```
 
-A full captured run (86+ real events) is in repo-root `demo_event_log.json`, generated by `backend/scripts/generate_demo_and_verify.py`.
+Captured run: repo-root `demo_event_log.json` from `backend/scripts/generate_demo_and_verify.py`.
