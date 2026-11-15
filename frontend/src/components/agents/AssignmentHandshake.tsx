@@ -24,7 +24,7 @@ interface Bubble {
   mood: 'neutral' | 'ok' | 'bad'
 }
 
-/** Compact farm-radio chat for Fleet ↔ Nav ↔ Safety. */
+/** Compact Fleet → Nav → Safety assignment dialogue from AgentBus traces. */
 export function AssignmentHandshake({ traces }: { traces: AgentTrace[] }) {
   const cycles = useMemo(() => buildCycles(traces), [traces])
   const newestKey = cycles[0]?.key ?? null
@@ -42,7 +42,7 @@ export function AssignmentHandshake({ traces }: { traces: AgentTrace[] }) {
   return (
     <div className="rounded-lg border border-white/10 bg-[#0d1524]/80 px-3 py-2.5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <p className="text-xs font-medium text-slate-200">Farm radio</p>
+        <p className="text-xs font-medium text-slate-200">Assignment handshake</p>
         {cycle ? (
           <p className="text-[11px] text-slate-500">
             {friendlyTractor(cycle.tractorId)}
@@ -50,7 +50,7 @@ export function AssignmentHandshake({ traces }: { traces: AgentTrace[] }) {
             {cycle.rejected ? ' · held' : cycle.committed ? ' · sent' : ''}
           </p>
         ) : (
-          <p className="text-[11px] text-slate-500">Hit Schedule to open the channel</p>
+          <p className="text-[11px] text-slate-500">Run Schedule to generate traces</p>
         )}
       </div>
 
@@ -85,7 +85,7 @@ export function AssignmentHandshake({ traces }: { traces: AgentTrace[] }) {
 
       {!cycle ? (
         <p className="mt-2 text-[11px] text-slate-500">
-          Dispatcher asks Nav, Nav answers, Safety clears — then the job goes out.
+          Fleet → Navigation → Safety → commit.
         </p>
       ) : (
         <ul className="mt-2 max-h-40 space-y-1.5 overflow-y-auto fs-scroll">

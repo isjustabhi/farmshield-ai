@@ -1,6 +1,6 @@
 # FarmShield AI: 90-Second Demo Script
 
-Live demo for judges. Values come from the running FastAPI simulator.
+Live demonstration for judges. UI values come from the running FastAPI simulator.
 
 ## Before you start (once)
 
@@ -20,12 +20,12 @@ Open **http://127.0.0.1:5173** → Command Center. Click **Reset**, then **Sched
 
 ## 0–15s: Tractors receive jobs
 
-**Say:** FarmShield assigns field jobs only after Safety checks equipment, fuel reserve, and one job per tractor.
+**Say:** FarmShield assigns jobs only after Safety checks equipment, fuel reserve, and single ownership.
 
 **Do:**
 1. Reset → Schedule.
-2. Point at the farm grid: three tractors should own compatible jobs (spray with spray, mow with mow).
-3. Point at **Agents talking** / farm handshake: Fleet asked Nav, then Safety, then commit.
+2. Show the farm grid: three tractors own compatible jobs.
+3. Show the assignment handshake / Agent Network traces (Fleet → Nav → Safety).
 
 **Expect:** Compatible assignments only. No double-booking.
 
@@ -33,69 +33,61 @@ Open **http://127.0.0.1:5173** → Command Center. Click **Reset**, then **Sched
 
 ## 15–30s: Live movement and progress
 
-**Say:** The clock is simulated minutes. Tractors travel with A*, then burn real work units and fuel.
+**Say:** Simulated minutes. A* travel, then work units and fuel decrease.
 
 **Do:**
-1. Click **Play** (about 0.4s wall-clock per sim minute) or **Step**.
-2. Watch paths and job progress increase.
-3. Glance at the event feed: travel, arrival, job start, progress.
+1. Play (about 0.4s per sim minute) or Step.
+2. Watch paths and job progress.
+3. Check the event feed.
 
-**Expect:** Positions change. Fuel drops. Progress is fractional and honest.
+**Expect:** Positions and fuel change. Progress is fractional.
 
 ---
 
 ## 30–45s: Tractor failure
 
-**Say:** Break a tractor mid-job. We keep completed work. We do not invent progress.
+**Say:** Break a tractor mid-job. Completed work is preserved.
 
 **Do:**
-1. Pause if the grid is hard to read.
-2. On Command Center or **Chaos Lab**, pick a tractor that is **working**.
-3. Click **Breakdown**.
+1. Pause if needed.
+2. Select a working tractor.
+3. Breakdown.
 
-**Expect:** Tractor is `broken`. Job goes `pending`. Preserved `completed_work_units` stay on the job.
+**Expect:** Tractor `broken`. Job `pending` with preserved `completed_work_units`.
 
 ---
 
-## 45–60s: Safe recovery
+## 45–60s: Recovery
 
-**Say:** Recovery asks for a replan. Fleet, Nav, and Safety run the same handshake before any reassign.
+**Say:** Recovery requests a replan. Fleet, Navigation, and Safety validate before reassign.
 
 **Do:**
-1. Show the recovery explanation if it already ran.
-2. Otherwise click **Schedule** / **Replan**.
-3. Same job id: progress is at least the preserved value. A free compatible tractor may take it. The broken one is not selected.
-
-**Expect:** No progress loss. No unsafe assign.
+1. Show recovery explanation if already present.
+2. Otherwise Schedule / Replan.
+3. Same job id: progress is at least the preserved value. Broken tractor is not selected.
 
 ---
 
-## 60–75s: Agent communication and memory
+## 60–75s: Traces and memory
 
-**Say:** Orchestration is turn-taking. Fleet proposes, Nav routes, Safety approves or rejects. Each hop is logged with real latency.
+**Say:** Each agent hop is logged with wall-clock latency.
 
 **Do:**
-1. Open **Agent Network**: traces show `fleet_agent → navigation_agent` and `→ safety_agent`.
-2. Show incident dialogue if Claude (or fallback) ran after the breakdown.
-3. Open **Incident Memory**: breakdown row with preserved work.
-4. Optional: Chaos Lab → **Block route** → obstacle appears, routes change.
+1. Agent Network: `fleet_agent → navigation_agent` and `→ safety_agent`.
+2. Incident dialogue after breakdown (Claude or fallback).
+3. Incident Memory: breakdown row.
+4. Optional: block a route in Chaos Lab.
 
 ---
 
-## 75–90s: Measured baseline
+## 75–90s: Benchmark
 
-**Say:** Benchmark Lab compares FCFS vs FarmShield on independent sims. These numbers are measured.
+**Say:** Benchmark Lab compares FCFS and FarmShield on independent sims. Numbers are measured.
 
 **Do:**
-1. Open **Benchmark Lab**.
-2. If empty, click **Run benchmark** (or show `benchmark_results.json`).
-3. Point at averages:
-   - Jobs completed / on-time / priority-weighted work up
-   - Missed deadlines down
-   - Travel / fuel may be higher (say that honestly)
-4. Offer CSV/JSON if asked.
-
-**Measured averages (horizon 300, 1 main + 20 variants):**
+1. Open Benchmark Lab.
+2. Run benchmark if needed (or show `benchmark_results.json`).
+3. Note completion / on-time gains and any travel or fuel increase.
 
 | Metric | FCFS | FarmShield | Δ% |
 | --- | ---: | ---: | ---: |
@@ -109,17 +101,15 @@ Open **http://127.0.0.1:5173** → Command Center. Click **Reset**, then **Sched
 
 ---
 
-## Backup if the UI misbehaves
+## API backup
 
 ```bash
 curl -s -X POST http://127.0.0.1:8000/api/simulation/reset
 curl -s -X POST http://127.0.0.1:8000/api/schedule
 curl -s -X POST http://127.0.0.1:8000/api/simulation/play
-# after ~10s
 curl -s -X POST http://127.0.0.1:8000/api/events/breakdown \
   -H 'Content-Type: application/json' \
   -d '{"tractor_id":"tractor_01","reason":"demo"}'
-curl -s http://127.0.0.1:8000/api/events | python -m json.tool | head
 ```
 
-Captured run: repo-root `demo_event_log.json` from `backend/scripts/generate_demo_and_verify.py`.
+Event capture: `demo_event_log.json` via `backend/scripts/generate_demo_and_verify.py`.

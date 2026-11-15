@@ -16,8 +16,8 @@ def _load_dotenv() -> None:
         from dotenv import load_dotenv
     except ImportError:
         return
-    # Prefer repo-root .env; also allow backend/.env
-    load_dotenv(ROOT / ".env", override=True)
+    # Fill missing keys from .env; do not override process env (tests / CI).
+    load_dotenv(ROOT / ".env", override=False)
     load_dotenv(ROOT / "backend" / ".env", override=False)
 
 

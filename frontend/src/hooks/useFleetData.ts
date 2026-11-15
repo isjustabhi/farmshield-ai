@@ -18,7 +18,7 @@ import type {
 } from '../types/api'
 
 const EXAMPLE_NOTE =
-  'Example preview (static). Start FastAPI on :8000 for a live interactive fleet.'
+  'Static example snapshot. Start FastAPI on port 8000 for live control.'
 
 interface FleetData {
   connection: ApiConnectionState

@@ -37,7 +37,8 @@ def sim(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> SimulationService:
     return service
 
 
-def test_fallback_dialogue_without_key() -> None:
+def test_fallback_dialogue_without_key(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("LLM_API_KEY", "")
     reload_llm_settings()
     llm_agent_bus.clear()
     d = run_incident_dialogue(

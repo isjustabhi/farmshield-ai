@@ -4,10 +4,10 @@ import type { AgentTrace, IncidentDialogue, LlmAgentStatus } from '../../types/a
 import { AssignmentHandshake } from './AssignmentHandshake'
 
 const CORE_AGENTS = [
-  { id: 'fleet_agent', name: 'Fleet', role: 'Dispatcher' },
-  { id: 'navigation_agent', name: 'Nav', role: 'Pathfinder' },
-  { id: 'safety_agent', name: 'Safety', role: 'Final say' },
-  { id: 'recovery_agent', name: 'Recovery', role: 'After break' },
+  { id: 'fleet_agent', name: 'Fleet', role: 'Matching' },
+  { id: 'navigation_agent', name: 'Nav', role: 'Routing' },
+  { id: 'safety_agent', name: 'Safety', role: 'Validation' },
+  { id: 'recovery_agent', name: 'Recovery', role: 'Replan' },
 ] as const
 
 type AgentId = (typeof CORE_AGENTS)[number]['id']
@@ -59,7 +59,7 @@ export function AgentDashboard({
   const latestDialogue = dialogues?.[0] ?? null
 
   return (
-    <GlassPanel title="Agents talking">
+    <GlassPanel title="Agent status">
       <div className="space-y-3">
         <div className="flex flex-wrap gap-2">
           {CORE_AGENTS.map((agent) => {

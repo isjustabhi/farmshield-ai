@@ -1,4 +1,4 @@
-# AgOpenWeb integration status (honest)
+# AgOpenWeb integration status
 
 Official source: [AgOpenGPS-Official/AgOpenWeb](https://github.com/AgOpenGPS-Official/AgOpenWeb)
 

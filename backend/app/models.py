@@ -209,7 +209,7 @@ class DecisionsResponse(BaseModel):
 
 
 class AgentTrace(BaseModel):
-    """Structured in-process agent interaction record (not a fake network hop)."""
+    """Structured in-process agent interaction record."""
 
     correlation_id: str
     decision_id: str | None

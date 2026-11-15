@@ -45,13 +45,6 @@ export function AgentNetworkPage({
             )}
           </GlassPanel>
 
-          <GlassPanel title="Talking points">
-            <ol className="list-decimal space-y-2 pl-4 text-sm leading-relaxed text-slate-300">
-              <li>Show the farm radio — dispatcher, navigator, safety clearing the job.</li>
-              <li>Schedule again so a new call shows up with another tractor.</li>
-              <li>Break a tractor — they talk it through; safety still has the final say.</li>
-            </ol>
-          </GlassPanel>
         </div>
 
         <div className="space-y-4">
@@ -59,7 +52,7 @@ export function AgentNetworkPage({
             <ul className="fs-scroll max-h-[22rem] space-y-3 overflow-y-auto">
               {dialogues.length === 0 && (
                 <li className="text-xs text-slate-500">
-                  Trigger a breakdown — Fleet, Recovery, and Safety LLM agents will talk here.
+                  No incident dialogue yet. Trigger a breakdown to generate messages.
                 </li>
               )}
               {dialogues.map((d) => (

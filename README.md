@@ -2,100 +2,88 @@
 
 Autonomous tractor fleet coordinator for the **American Tractor Company: Run the Fleet** hackathon.
 
-We built a working farm command center. Tractors get real jobs. Agents talk before anything is committed. Safety can say no. When a machine breaks, we keep the work already done.
+FarmShield schedules field jobs on a deterministic simulator, validates assignments through Fleet, Navigation, and Safety agents, recovers from failures without losing completed work, records operational memory, and benchmarks against FCFS. The UI uses the FastAPI backend. Optional Anthropic Claude (via `.env`) generates incident dialogue only; it does not commit jobs.
 
-The live UI calls our **FastAPI** backend. For incident talk we optionally call **Anthropic Claude** (API key in `.env`). Claude explains. It does not assign jobs by itself.
-
-Static preview: [https://isjustabhi.github.io/farmshield-ai/](https://isjustabhi.github.io/farmshield-ai/)
+Static UI preview: [https://isjustabhi.github.io/farmshield-ai/](https://isjustabhi.github.io/farmshield-ai/)
 
 ---
 
-## APIs we use
+## APIs
 
 | API | Role |
 | --- | --- |
-| Our FastAPI `/api/*` | Live sim, schedule, chaos, metrics. The UI always uses this. |
-| Claude (optional) | After a breakdown, agents talk in plain language about what happened. |
-| AgOpenWeb field file (optional) | Read-only `field.geojson` metadata. Not tractor control. |
+| FastAPI `/api/*` | Simulation, schedule, chaos, metrics |
+| Claude (optional) | Incident dialogue after breakdowns |
+| AgOpenWeb field file (optional) | Read-only `field.geojson` metadata |
 
 ---
 
-## The scenario
+## Scenario
 
-File: `backend/data/scenario.json` (`hackathon_demo_v1`, seed 42)
+`backend/data/scenario.json` (`hackathon_demo_v1`, seed 42)
 
-| Piece | What you get |
+| Piece | Details |
 | --- | --- |
 | Map | 20×20 grid, depot at (0,0) |
-| Fields | 8 named fields (North Orchard, East Meadow, River Bend, Center Plot, and more) |
-| Tractors | Shield-Alpha and Charlie spray. Shield-Bravo mows. |
-| Jobs | 10 jobs with priority, deadlines, and dependencies (mow after spray on the same field) |
-| Fuel | Travel burn, work burn, and a safety reserve that Safety enforces |
+| Fields | 8 fields (North Orchard, East Meadow, River Bend, Center Plot, and others) |
+| Tractors | Shield-Alpha and Charlie (spraying), Shield-Bravo (mowing) |
+| Jobs | 10 jobs with priority, deadlines, and dependencies |
+| Fuel | Travel, work, and safety reserve |
 
-One tick = one sim minute. **Schedule** runs orchestration. **Play** moves the farm. **Chaos Lab** can break a tractor or block a path.
+One tick equals one simulated minute. Schedule runs orchestration. Play advances the clock. Chaos Lab injects breakdowns and route blocks.
 
 ---
 
-## AI orchestration (how agents communicate)
+## AI orchestration
 
-Orchestration means **several agents take turns**, each with one job, and the next step waits on the answer. It is not one model that secretly does everything.
+Agents run in sequence through `orchestration.py`. Each step consumes the previous response. Assignments are committed only after Safety approval.
 
-### The crew
-
-| Agent | Job |
+| Agent | Role |
 | --- | --- |
-| **Fleet** | Picks who should take which job (scored matching) |
-| **Navigation** | Builds an A* path and travel/fuel estimate |
-| **Safety** | Approves or rejects before anything is committed |
-| **Recovery** | After a fault, asks for a replan while keeping preserved work |
-| **Claude personas** (optional) | Talk about the incident so humans can hear the story |
+| Fleet | Match free tractors to schedulable jobs |
+| Navigation | A* route, travel time, fuel estimate |
+| Safety | Approve or reject before commit |
+| Recovery | Propose replan after faults; preserve completed work |
+| Incident LLM (optional) | Dialogue about the incident |
 
-### Normal assign (the handshake)
-
-```
-Fleet:        Who should take this job?
-Fleet → Nav:  Can you route this tractor to that field?
-Nav → Fleet:  Yes. Here is the path, time, and fuel.  (or: unreachable)
-Fleet → Safety: Is this assign allowed?
-Safety → Fleet: Approve.  (or: Reject)
-Fleet → Sim:  Commit only if approved.
-```
-
-If Safety rejects, that pair is skipped. Fleet does not force it through.
-
-This appears on **Command Center / Agent Network** as AgentBus traces (`fleet_agent → navigation_agent → safety_agent`).
-
-### When something fails
+### Assign path
 
 ```
-Sim:          Tractor stops. Completed work units are kept.
-Recovery:     We need a replan for the unfinished job.
-Fleet→Nav→Safety: Same handshake as above for a replacement.
-Claude (optional): Fleet / Recovery / Safety talk about the incident.
+Fleet plan
+  → Navigation (RouteRequest / RouteResponse)
+  → Safety (SafetyValidationRequest / SafetyValidationResponse)
+  → simulation.assign_job (only if approved)
 ```
 
-Claude never overrides Safety. Progress is never invented.
+Rejected pairs are skipped. Traces appear on Command Center and Agent Network (`fleet_agent → navigation_agent → safety_agent`).
 
-### How the messages are carried
+### Failure path
 
-`orchestration.py` uses **AgentBus**: each call has a sender, receiver, request type, response type, status, and timing. Latency is real wall-clock time. Traces go to the UI and SQLite. That is multi-agent orchestration with a recorded conversation, not a hidden function call.
+```
+Breakdown: preserve completed_work_units, release job
+  → Recovery proposal
+  → Fleet → Navigation → Safety (same gates)
+  → optional incident LLM dialogue
+```
+
+See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for AgentBus details and API routes.
 
 ---
 
-## What makes this stand out
+## Differentiating factors
 
-1. **Safety is a hard gate.** Wrong implement, low fuel, or double-booking never ships, even if Fleet likes the score.
-2. **Agents are visible.** Judges see the handshake and incident talk, not a black-box assign.
-3. **Failures keep real progress.** Breakdown preserves work. Recovery re-checks Safety before reassign.
-4. **We measure honestly.** Productivity ledger and fair FCFS benchmarks on the same seeds. Travel/fuel tradeoffs are reported, not hidden.
-5. **Memory lasts.** SQLite stores runs, incidents, and traces across resets.
-6. **AgOpenWeb is honest.** We can import a documented field file. We do not fake GPS or cab control.
+1. Safety validation is required before every commit.
+2. Agent hops are logged (sender, receiver, latency, status) and shown in the UI.
+3. Breakdowns preserve completed work; recovery reuses the same Safety path.
+4. Productivity metrics and FCFS benchmarks use measured simulator data.
+5. SQLite stores runs, incidents, and traces.
+6. AgOpenWeb support is read-only field metadata; no claimed GPS or vehicle control.
 
 ---
 
 ## Problem statement
 
-Multi-tractor fleets must assign the right implement to the right field job, respect fuel and deadlines, avoid conflicting ownership, and recover when machines fail mid-work. Naive “first free tractor” policies waste priority and miss deadlines; unsafe optimizers that ignore fuel or equipment create operational fiction. Judges need a **working demo** that proves coordination, safety, memory, and measured improvement — not slideware metrics.
+Multi-tractor fleets must assign the right implement to the right field job, respect fuel and deadlines, avoid conflicting ownership, and recover when machines fail mid-work. First-free-tractor policies waste priority and miss deadlines. Schedulers that ignore fuel or equipment produce unsafe plans. This project is a working demo of coordination, safety, memory, and measured comparison against a baseline.
 
 ## Solution overview
 
@@ -267,7 +255,7 @@ Generated by `app.benchmark.run_benchmark(horizon=300, variant_count=20)` on ind
 | Fuel consumed | 70.5 | 74.8 | +6.15% (FarmShield worse) |
 | Safety violations | 0 | 0 | tie |
 
-FarmShield finishes more (and more on-time) priority-weighted work with fewer misses, at the cost of more travel/fuel on this scenario family. Scenario majority score (counting all metrics equally) favors FCFS because travel/fuel tip the count — reported honestly, not hidden.
+FarmShield finishes more (and more on-time) priority-weighted work with fewer misses, at higher travel and fuel on this scenario family. Equal-weight scenario scoring can favor FCFS when travel and fuel are counted the same as completions.
 
 Re-run:
 
