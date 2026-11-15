@@ -8,10 +8,11 @@ import {
   Wifi,
   WifiOff,
 } from 'lucide-react'
-import type { ApiConnectionState, SimulationState } from '../../types/api'
+import type { AgOpenWebIntegration, ApiConnectionState, SimulationState } from '../../types/api'
 
 interface TopNavProps {
   connection: ApiConnectionState
+  agopenweb: AgOpenWebIntegration | null
   state: SimulationState | null
   busy: boolean
   onPlay: () => void
@@ -23,6 +24,7 @@ interface TopNavProps {
 
 export function TopNav({
   connection,
+  agopenweb,
   state,
   busy,
   onPlay,
@@ -52,6 +54,24 @@ export function TopNav({
           value={healthOk ? 'Healthy' : 'Offline'}
           icon={healthOk ? <Wifi size={12} /> : <WifiOff size={12} />}
           tone={healthOk ? 'ok' : 'bad'}
+        />
+        <Metric
+          label="AgOpenWeb"
+          value={
+            agopenweb?.status === 'connected'
+              ? 'Connected'
+              : agopenweb?.status === 'disconnected'
+                ? 'Disconnected'
+                : 'Unsupported'
+          }
+          tone={
+            agopenweb?.status === 'connected'
+              ? 'ok'
+              : agopenweb?.status === 'disconnected'
+                ? 'bad'
+                : 'neutral'
+          }
+          title={agopenweb?.message}
         />
         <Metric
           label="Active"
@@ -88,16 +108,18 @@ function Metric({
   value,
   icon,
   tone = 'neutral',
+  title,
 }: {
   label: string
   value: string
   icon?: React.ReactNode
   tone?: 'neutral' | 'ok' | 'bad'
+  title?: string
 }) {
   const color =
     tone === 'ok' ? 'text-[var(--fs-emerald)]' : tone === 'bad' ? 'text-[var(--fs-red)]' : 'text-slate-200'
   return (
-    <div className="rounded-lg border border-white/5 bg-black/20 px-3 py-2">
+    <div className="rounded-lg border border-white/5 bg-black/20 px-3 py-2" title={title}>
       <p className="text-[10px] uppercase tracking-wide text-slate-500">{label}</p>
       <p className={`mt-0.5 flex items-center gap-1.5 font-medium ${color}`}>
         {icon}

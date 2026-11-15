@@ -23,7 +23,9 @@ from .navigation import plan_path
 
 SCENARIO_PATH = Path(__file__).resolve().parent.parent / "data" / "scenario.json"
 MILESTONE_FRACTIONS = (0.25, 0.5, 0.75)
-DEFAULT_PLAY_INTERVAL_SEC = 0.05
+# Wall-clock seconds between simulated minutes during Play.
+# ~0.4s keeps demos readable (~2.5 sim-minutes per real second).
+DEFAULT_PLAY_INTERVAL_SEC = 0.4
 
 
 class SimulationError(Exception):
@@ -122,6 +124,9 @@ class SimulationService:
                     scenario_name=self.scenario_name,
                     seed=self.seed,
                 )
+                from .llm_agents import llm_agent_bus
+
+                llm_agent_bus.clear()
                 run_id = memory_service.operational_memory.current_run_id
             else:
                 run_id = None

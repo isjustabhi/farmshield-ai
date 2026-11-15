@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-15T20:45:45.834711+00:00",
+  "generated_at": "2026-11-15T21:24:20.756193+00:00",
   "methodology": "Fair head-to-head: FCFS baseline vs FarmShield Fleet Agent on independent SimulationService copies. Identical scenario JSON, tractors, fuel, jobs, deadlines, A* routes, simulator ticks, time horizon, seeded incidents, job progress rules, and Safety Agent validator. Assignments commit only after Navigation + Safety approval. Metrics are computed from each copy's private productivity ledger and counters \u2014 never invented or hardcoded.",
-  "horizon": 40,
-  "variant_count": 1,
+  "horizon": 300,
+  "variant_count": 20,
   "scenario_path": "/Users/abhiramn@arizona.edu/Desktop/FarmShield AI/backend/data/scenario.json",
   "definitions": {
     "jobs_completed": "Jobs that reached COMPLETED status within the horizon.",
@@ -20,28 +20,28 @@
       "scenario_id": "main_demo",
       "label": "Main demo scenario (no injected incidents)",
       "seed": 0,
-      "horizon": 40,
+      "horizon": 300,
       "incidents": [],
       "baseline": {
-        "jobs_completed": 7,
-        "on_time_completions": 7,
-        "priority_weighted_work": 176.0,
-        "travel_time": 51.0,
-        "idle_time": 22.0,
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 769.0,
         "missed_deadlines": 0,
-        "fuel_consumed": 51.349999999999994,
+        "fuel_consumed": 71.47499999999997,
         "safety_violations": 0,
         "breakdown_recovery_success": 0,
         "breakdown_recovery_attempts": 0
       },
       "farmshield": {
-        "jobs_completed": 7,
-        "on_time_completions": 7,
-        "priority_weighted_work": 177.0,
-        "travel_time": 52.0,
-        "idle_time": 22.0,
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 765.0,
         "missed_deadlines": 0,
-        "fuel_consumed": 51.624999999999986,
+        "fuel_consumed": 74.67499999999997,
         "safety_violations": 0,
         "breakdown_recovery_success": 0,
         "breakdown_recovery_attempts": 0
@@ -49,46 +49,46 @@
       "deltas": {
         "jobs_completed": 0.0,
         "on_time_completions": 0.0,
-        "priority_weighted_work": 1.0,
-        "travel_time": 1.0,
-        "idle_time": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
         "missed_deadlines": 0.0,
-        "fuel_consumed": 0.2749999999999915,
+        "fuel_consumed": 3.200000000000003,
         "safety_violations": 0.0,
         "breakdown_recovery_success": 0.0
       },
       "pct_changes": {
         "jobs_completed": 0.0,
         "on_time_completions": 0.0,
-        "priority_weighted_work": 0.5681818181818182,
-        "travel_time": 1.9607843137254901,
-        "idle_time": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5201560468140443,
         "missed_deadlines": 0.0,
-        "fuel_consumed": 0.535540408958114,
+        "fuel_consumed": 4.477089891570485,
         "safety_violations": 0.0,
         "breakdown_recovery_success": 0.0
       },
       "winners": {
         "jobs_completed": "tie",
         "on_time_completions": "tie",
-        "priority_weighted_work": "farmshield",
+        "priority_weighted_work": "tie",
         "travel_time": "baseline",
-        "idle_time": "tie",
+        "idle_time": "farmshield",
         "missed_deadlines": "tie",
         "fuel_consumed": "baseline",
         "safety_violations": "tie",
         "breakdown_recovery_success": "tie"
       },
       "notes": [
-        "FarmShield worse on travel_time: baseline=51 farmshield=52 (better is lower).",
-        "FarmShield worse on fuel_consumed: baseline=51.35 farmshield=51.625 (better is lower)."
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
       ]
     },
     {
       "scenario_id": "variant_01",
       "label": "Seeded variant 1 (breakdowns/fuel/blocks)",
       "seed": 1,
-      "horizon": 40,
+      "horizon": 300,
       "incidents": [
         {
           "sim_time": 16,
@@ -131,169 +131,2091 @@
         }
       ],
       "baseline": {
-        "jobs_completed": 6,
-        "on_time_completions": 6,
-        "priority_weighted_work": 168.0,
-        "travel_time": 49.0,
-        "idle_time": 30.0,
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 71.0,
+        "idle_time": 742.0,
         "missed_deadlines": 0,
-        "fuel_consumed": 49.54999999999998,
+        "fuel_consumed": 74.67499999999995,
         "safety_violations": 0,
         "breakdown_recovery_success": 0,
-        "breakdown_recovery_attempts": 0
+        "breakdown_recovery_attempts": 1
       },
       "farmshield": {
-        "jobs_completed": 6,
-        "on_time_completions": 6,
-        "priority_weighted_work": 169.0,
-        "travel_time": 50.0,
-        "idle_time": 30.0,
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 75.0,
+        "idle_time": 738.0,
         "missed_deadlines": 0,
-        "fuel_consumed": 49.82499999999999,
+        "fuel_consumed": 77.87499999999996,
         "safety_violations": 0,
         "breakdown_recovery_success": 0,
-        "breakdown_recovery_attempts": 0
+        "breakdown_recovery_attempts": 1
       },
       "deltas": {
         "jobs_completed": 0.0,
         "on_time_completions": 0.0,
-        "priority_weighted_work": 1.0,
-        "travel_time": 1.0,
-        "idle_time": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
         "missed_deadlines": 0.0,
-        "fuel_consumed": 0.2750000000000057,
+        "fuel_consumed": 3.200000000000003,
         "safety_violations": 0.0,
         "breakdown_recovery_success": 0.0
       },
       "pct_changes": {
         "jobs_completed": 0.0,
         "on_time_completions": 0.0,
-        "priority_weighted_work": 0.5952380952380952,
-        "travel_time": 2.0408163265306123,
-        "idle_time": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.633802816901409,
+        "idle_time": -0.5390835579514826,
         "missed_deadlines": 0.0,
-        "fuel_consumed": 0.5549949545913335,
+        "fuel_consumed": 4.285236022765323,
         "safety_violations": 0.0,
         "breakdown_recovery_success": 0.0
       },
       "winners": {
         "jobs_completed": "tie",
         "on_time_completions": "tie",
-        "priority_weighted_work": "farmshield",
+        "priority_weighted_work": "tie",
         "travel_time": "baseline",
-        "idle_time": "tie",
+        "idle_time": "farmshield",
         "missed_deadlines": "tie",
         "fuel_consumed": "baseline",
         "safety_violations": "tie",
         "breakdown_recovery_success": "tie"
       },
       "notes": [
-        "FarmShield worse on travel_time: baseline=49 farmshield=50 (better is lower).",
-        "FarmShield worse on fuel_consumed: baseline=49.55 farmshield=49.825 (better is lower)."
+        "FarmShield worse on travel_time: baseline=71 farmshield=75 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=74.675 farmshield=77.875 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_02",
+      "label": "Seeded variant 2 (breakdowns/fuel/blocks)",
+      "seed": 2,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 42,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_03",
+            "reason": "bench_seed_2"
+          }
+        },
+        {
+          "sim_time": 57,
+          "kind": "block",
+          "params": {
+            "x": 7,
+            "y": 11
+          }
+        },
+        {
+          "sim_time": 69,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_03"
+          }
+        },
+        {
+          "sim_time": 97,
+          "kind": "unblock",
+          "params": {
+            "x": 7,
+            "y": 11
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 742.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 738.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5390835579514826,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_03",
+      "label": "Seeded variant 3 (breakdowns/fuel/blocks)",
+      "seed": 3,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 18,
+          "kind": "fuel_change",
+          "params": {
+            "tractor_id": "tractor_02",
+            "fuel_level": 11.0
+          }
+        },
+        {
+          "sim_time": 43,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_01",
+            "reason": "bench_seed_3"
+          }
+        },
+        {
+          "sim_time": 71,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_01"
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 741.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 737.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5398110661268556,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_04",
+      "label": "Seeded variant 4 (breakdowns/fuel/blocks)",
+      "seed": 4,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 24,
+          "kind": "priority",
+          "params": {
+            "job_id": "job_07",
+            "priority": 1
+          }
+        },
+        {
+          "sim_time": 44,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_02",
+            "reason": "bench_seed_4"
+          }
+        },
+        {
+          "sim_time": 59,
+          "kind": "block",
+          "params": {
+            "x": 9,
+            "y": 7
+          }
+        },
+        {
+          "sim_time": 73,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_02"
+          }
+        },
+        {
+          "sim_time": 99,
+          "kind": "unblock",
+          "params": {
+            "x": 9,
+            "y": 7
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 250.0,
+        "travel_time": 68.0,
+        "idle_time": 739.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 0,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 250.0,
+        "travel_time": 72.0,
+        "idle_time": 735.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 0,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5412719891745602,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_05",
+      "label": "Seeded variant 5 (breakdowns/fuel/blocks)",
+      "seed": 5,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 20,
+          "kind": "fuel_change",
+          "params": {
+            "tractor_id": "tractor_01",
+            "fuel_level": 8.0
+          }
+        },
+        {
+          "sim_time": 45,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_03",
+            "reason": "bench_seed_5"
+          }
+        },
+        {
+          "sim_time": 60,
+          "kind": "block",
+          "params": {
+            "x": 10,
+            "y": 10
+          }
+        },
+        {
+          "sim_time": 75,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_03"
+          }
+        },
+        {
+          "sim_time": 100,
+          "kind": "unblock",
+          "params": {
+            "x": 10,
+            "y": 10
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 739.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 735.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5412719891745602,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_06",
+      "label": "Seeded variant 6 (breakdowns/fuel/blocks)",
+      "seed": 6,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 46,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_01",
+            "reason": "bench_seed_6"
+          }
+        },
+        {
+          "sim_time": 77,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_01"
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 738.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 734.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5420054200542005,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_07",
+      "label": "Seeded variant 7 (breakdowns/fuel/blocks)",
+      "seed": 7,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 22,
+          "kind": "fuel_change",
+          "params": {
+            "tractor_id": "tractor_03",
+            "fuel_level": 10.0
+          }
+        },
+        {
+          "sim_time": 47,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_02",
+            "reason": "bench_seed_7"
+          }
+        },
+        {
+          "sim_time": 62,
+          "kind": "block",
+          "params": {
+            "x": 12,
+            "y": 6
+          }
+        },
+        {
+          "sim_time": 79,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_02"
+          }
+        },
+        {
+          "sim_time": 102,
+          "kind": "unblock",
+          "params": {
+            "x": 12,
+            "y": 6
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 737.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 73.0,
+        "idle_time": 732.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 0,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.0,
+        "idle_time": -5.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": -1.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 7.352941176470589,
+        "idle_time": -0.6784260515603799,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": -100.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "baseline"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=73 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower).",
+        "FarmShield worse on breakdown_recovery_success: baseline=1 farmshield=0 (better is higher)."
+      ]
+    },
+    {
+      "scenario_id": "variant_08",
+      "label": "Seeded variant 8 (breakdowns/fuel/blocks)",
+      "seed": 8,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 28,
+          "kind": "priority",
+          "params": {
+            "job_id": "job_01",
+            "priority": 1
+          }
+        },
+        {
+          "sim_time": 48,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_03",
+            "reason": "bench_seed_8"
+          }
+        },
+        {
+          "sim_time": 63,
+          "kind": "block",
+          "params": {
+            "x": 13,
+            "y": 9
+          }
+        },
+        {
+          "sim_time": 81,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_03"
+          }
+        },
+        {
+          "sim_time": 103,
+          "kind": "unblock",
+          "params": {
+            "x": 13,
+            "y": 9
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 736.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 732.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5434782608695652,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_09",
+      "label": "Seeded variant 9 (breakdowns/fuel/blocks)",
+      "seed": 9,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 24,
+          "kind": "fuel_change",
+          "params": {
+            "tractor_id": "tractor_02",
+            "fuel_level": 12.0
+          }
+        },
+        {
+          "sim_time": 49,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_01",
+            "reason": "bench_seed_9"
+          }
+        },
+        {
+          "sim_time": 83,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_01"
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 7,
+        "on_time_completions": 7,
+        "priority_weighted_work": 174.0,
+        "travel_time": 45.0,
+        "idle_time": 774.0,
+        "missed_deadlines": 3,
+        "fuel_consumed": 47.575,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 731.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 3.0,
+        "on_time_completions": 3.0,
+        "priority_weighted_work": 64.0,
+        "travel_time": 27.0,
+        "idle_time": -43.0,
+        "missed_deadlines": -3.0,
+        "fuel_consumed": 27.099999999999966,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 42.857142857142854,
+        "on_time_completions": 42.857142857142854,
+        "priority_weighted_work": 36.7816091954023,
+        "travel_time": 60.0,
+        "idle_time": -5.555555555555555,
+        "missed_deadlines": -100.0,
+        "fuel_consumed": 56.96269048870197,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "farmshield",
+        "on_time_completions": "farmshield",
+        "priority_weighted_work": "farmshield",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "farmshield",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=45 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=47.575 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_10",
+      "label": "Seeded variant 10 (breakdowns/fuel/blocks)",
+      "seed": 10,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 50,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_02",
+            "reason": "bench_seed_10"
+          }
+        },
+        {
+          "sim_time": 65,
+          "kind": "block",
+          "params": {
+            "x": 5,
+            "y": 5
+          }
+        },
+        {
+          "sim_time": 85,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_02"
+          }
+        },
+        {
+          "sim_time": 105,
+          "kind": "unblock",
+          "params": {
+            "x": 5,
+            "y": 5
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 69.0,
+        "idle_time": 733.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 0,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 73.0,
+        "idle_time": 729.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 0,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.797101449275362,
+        "idle_time": -0.5457025920873124,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=69 farmshield=73 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_11",
+      "label": "Seeded variant 11 (breakdowns/fuel/blocks)",
+      "seed": 11,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 16,
+          "kind": "fuel_change",
+          "params": {
+            "tractor_id": "tractor_01",
+            "fuel_level": 9.0
+          }
+        },
+        {
+          "sim_time": 51,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_03",
+            "reason": "bench_seed_11"
+          }
+        },
+        {
+          "sim_time": 66,
+          "kind": "block",
+          "params": {
+            "x": 6,
+            "y": 8
+          }
+        },
+        {
+          "sim_time": 87,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_03"
+          }
+        },
+        {
+          "sim_time": 106,
+          "kind": "unblock",
+          "params": {
+            "x": 6,
+            "y": 8
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 733.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 729.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5457025920873124,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_12",
+      "label": "Seeded variant 12 (breakdowns/fuel/blocks)",
+      "seed": 12,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 32,
+          "kind": "priority",
+          "params": {
+            "job_id": "job_07",
+            "priority": 1
+          }
+        },
+        {
+          "sim_time": 52,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_01",
+            "reason": "bench_seed_12"
+          }
+        },
+        {
+          "sim_time": 89,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_01"
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 732.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 728.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.546448087431694,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_13",
+      "label": "Seeded variant 13 (breakdowns/fuel/blocks)",
+      "seed": 13,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 18,
+          "kind": "fuel_change",
+          "params": {
+            "tractor_id": "tractor_03",
+            "fuel_level": 11.0
+          }
+        },
+        {
+          "sim_time": 53,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_02",
+            "reason": "bench_seed_13"
+          }
+        },
+        {
+          "sim_time": 68,
+          "kind": "block",
+          "params": {
+            "x": 8,
+            "y": 14
+          }
+        },
+        {
+          "sim_time": 91,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_02"
+          }
+        },
+        {
+          "sim_time": 108,
+          "kind": "unblock",
+          "params": {
+            "x": 8,
+            "y": 14
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 69.0,
+        "idle_time": 730.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 0,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 73.0,
+        "idle_time": 726.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 0,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.797101449275362,
+        "idle_time": -0.547945205479452,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=69 farmshield=73 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_14",
+      "label": "Seeded variant 14 (breakdowns/fuel/blocks)",
+      "seed": 14,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 54,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_03",
+            "reason": "bench_seed_14"
+          }
+        },
+        {
+          "sim_time": 69,
+          "kind": "block",
+          "params": {
+            "x": 9,
+            "y": 7
+          }
+        },
+        {
+          "sim_time": 93,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_03"
+          }
+        },
+        {
+          "sim_time": 109,
+          "kind": "unblock",
+          "params": {
+            "x": 9,
+            "y": 7
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 730.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 726.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.547945205479452,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_15",
+      "label": "Seeded variant 15 (breakdowns/fuel/blocks)",
+      "seed": 15,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 20,
+          "kind": "fuel_change",
+          "params": {
+            "tractor_id": "tractor_02",
+            "fuel_level": 8.0
+          }
+        },
+        {
+          "sim_time": 55,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_01",
+            "reason": "bench_seed_15"
+          }
+        },
+        {
+          "sim_time": 80,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_01"
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 744.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 740.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5376344086021506,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_16",
+      "label": "Seeded variant 16 (breakdowns/fuel/blocks)",
+      "seed": 16,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 36,
+          "kind": "priority",
+          "params": {
+            "job_id": "job_01",
+            "priority": 1
+          }
+        },
+        {
+          "sim_time": 56,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_02",
+            "reason": "bench_seed_16"
+          }
+        },
+        {
+          "sim_time": 71,
+          "kind": "block",
+          "params": {
+            "x": 11,
+            "y": 13
+          }
+        },
+        {
+          "sim_time": 82,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_02"
+          }
+        },
+        {
+          "sim_time": 111,
+          "kind": "unblock",
+          "params": {
+            "x": 11,
+            "y": 13
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 742.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 0,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 738.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 0,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5390835579514826,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_17",
+      "label": "Seeded variant 17 (breakdowns/fuel/blocks)",
+      "seed": 17,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 22,
+          "kind": "fuel_change",
+          "params": {
+            "tractor_id": "tractor_01",
+            "fuel_level": 10.0
+          }
+        },
+        {
+          "sim_time": 57,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_03",
+            "reason": "bench_seed_17"
+          }
+        },
+        {
+          "sim_time": 72,
+          "kind": "block",
+          "params": {
+            "x": 12,
+            "y": 6
+          }
+        },
+        {
+          "sim_time": 84,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_03"
+          }
+        },
+        {
+          "sim_time": 112,
+          "kind": "unblock",
+          "params": {
+            "x": 12,
+            "y": 6
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 742.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 738.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5390835579514826,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_18",
+      "label": "Seeded variant 18 (breakdowns/fuel/blocks)",
+      "seed": 18,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 58,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_01",
+            "reason": "bench_seed_18"
+          }
+        },
+        {
+          "sim_time": 86,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_01"
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 741.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 737.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5398110661268556,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_19",
+      "label": "Seeded variant 19 (breakdowns/fuel/blocks)",
+      "seed": 19,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 24,
+          "kind": "fuel_change",
+          "params": {
+            "tractor_id": "tractor_03",
+            "fuel_level": 12.0
+          }
+        },
+        {
+          "sim_time": 59,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_02",
+            "reason": "bench_seed_19"
+          }
+        },
+        {
+          "sim_time": 74,
+          "kind": "block",
+          "params": {
+            "x": 14,
+            "y": 12
+          }
+        },
+        {
+          "sim_time": 88,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_02"
+          }
+        },
+        {
+          "sim_time": 114,
+          "kind": "unblock",
+          "params": {
+            "x": 14,
+            "y": 12
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 68.0,
+        "idle_time": 739.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 0,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 238.0,
+        "travel_time": 72.0,
+        "idle_time": 735.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 0,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5412719891745602,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
+      ]
+    },
+    {
+      "scenario_id": "variant_20",
+      "label": "Seeded variant 20 (breakdowns/fuel/blocks)",
+      "seed": 20,
+      "horizon": 300,
+      "incidents": [
+        {
+          "sim_time": 20,
+          "kind": "priority",
+          "params": {
+            "job_id": "job_07",
+            "priority": 1
+          }
+        },
+        {
+          "sim_time": 60,
+          "kind": "breakdown",
+          "params": {
+            "tractor_id": "tractor_03",
+            "reason": "bench_seed_20"
+          }
+        },
+        {
+          "sim_time": 75,
+          "kind": "block",
+          "params": {
+            "x": 5,
+            "y": 5
+          }
+        },
+        {
+          "sim_time": 90,
+          "kind": "repair",
+          "params": {
+            "tractor_id": "tractor_03"
+          }
+        },
+        {
+          "sim_time": 115,
+          "kind": "unblock",
+          "params": {
+            "x": 5,
+            "y": 5
+          }
+        }
+      ],
+      "baseline": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 250.0,
+        "travel_time": 68.0,
+        "idle_time": 739.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 71.47499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "farmshield": {
+        "jobs_completed": 10,
+        "on_time_completions": 10,
+        "priority_weighted_work": 250.0,
+        "travel_time": 72.0,
+        "idle_time": 735.0,
+        "missed_deadlines": 0,
+        "fuel_consumed": 74.67499999999997,
+        "safety_violations": 0,
+        "breakdown_recovery_success": 1,
+        "breakdown_recovery_attempts": 1
+      },
+      "deltas": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 4.0,
+        "idle_time": -4.0,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 3.200000000000003,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "pct_changes": {
+        "jobs_completed": 0.0,
+        "on_time_completions": 0.0,
+        "priority_weighted_work": 0.0,
+        "travel_time": 5.88235294117647,
+        "idle_time": -0.5412719891745602,
+        "missed_deadlines": 0.0,
+        "fuel_consumed": 4.477089891570485,
+        "safety_violations": 0.0,
+        "breakdown_recovery_success": 0.0
+      },
+      "winners": {
+        "jobs_completed": "tie",
+        "on_time_completions": "tie",
+        "priority_weighted_work": "tie",
+        "travel_time": "baseline",
+        "idle_time": "farmshield",
+        "missed_deadlines": "tie",
+        "fuel_consumed": "baseline",
+        "safety_violations": "tie",
+        "breakdown_recovery_success": "tie"
+      },
+      "notes": [
+        "FarmShield worse on travel_time: baseline=68 farmshield=72 (better is lower).",
+        "FarmShield worse on fuel_consumed: baseline=71.475 farmshield=74.675 (better is lower)."
       ]
     }
   ],
   "averages": {
     "baseline": {
-      "jobs_completed": 6.5,
-      "on_time_completions": 6.5,
-      "priority_weighted_work": 172.0,
-      "travel_time": 50.0,
-      "idle_time": 26.0,
-      "missed_deadlines": 0.0,
-      "fuel_consumed": 50.44999999999999,
+      "jobs_completed": 9.857142857142858,
+      "on_time_completions": 9.857142857142858,
+      "priority_weighted_work": 236.0952380952381,
+      "travel_time": 67.14285714285714,
+      "idle_time": 741.047619047619,
+      "missed_deadlines": 0.14285714285714285,
+      "fuel_consumed": 70.48928571428569,
       "safety_violations": 0.0,
-      "breakdown_recovery_success": 0.0
+      "breakdown_recovery_success": 0.6666666666666666
     },
     "farmshield": {
-      "jobs_completed": 6.5,
-      "on_time_completions": 6.5,
-      "priority_weighted_work": 173.0,
-      "travel_time": 51.0,
-      "idle_time": 26.0,
+      "jobs_completed": 10.0,
+      "on_time_completions": 10.0,
+      "priority_weighted_work": 239.14285714285714,
+      "travel_time": 72.28571428571429,
+      "idle_time": 735.1428571428571,
       "missed_deadlines": 0.0,
-      "fuel_consumed": 50.72499999999999,
+      "fuel_consumed": 74.82738095238092,
       "safety_violations": 0.0,
-      "breakdown_recovery_success": 0.0
+      "breakdown_recovery_success": 0.6190476190476191
     },
     "pct_changes": {
-      "jobs_completed": 0.0,
-      "on_time_completions": 0.0,
-      "priority_weighted_work": 0.5813953488372093,
-      "travel_time": 2.0,
-      "idle_time": 0.0,
-      "missed_deadlines": 0.0,
-      "fuel_consumed": 0.5450941526263601,
+      "jobs_completed": 1.4492753623188355,
+      "on_time_completions": 1.4492753623188355,
+      "priority_weighted_work": 1.2908430818878536,
+      "travel_time": 7.659574468085122,
+      "idle_time": -0.796812749003987,
+      "missed_deadlines": -100.0,
+      "fuel_consumed": 6.1542618770160935,
       "safety_violations": 0.0,
-      "breakdown_recovery_success": 0.0
+      "breakdown_recovery_success": -7.142857142857134
     },
     "deltas": {
-      "jobs_completed": 0.0,
-      "on_time_completions": 0.0,
-      "priority_weighted_work": 1.0,
-      "travel_time": 1.0,
-      "idle_time": 0.0,
-      "missed_deadlines": 0.0,
-      "fuel_consumed": 0.2749999999999986,
+      "jobs_completed": 0.14285714285714235,
+      "on_time_completions": 0.14285714285714235,
+      "priority_weighted_work": 3.047619047619037,
+      "travel_time": 5.142857142857153,
+      "idle_time": -5.904761904761926,
+      "missed_deadlines": -0.14285714285714285,
+      "fuel_consumed": 4.338095238095235,
       "safety_violations": 0.0,
-      "breakdown_recovery_success": 0.0
+      "breakdown_recovery_success": -0.04761904761904756
     }
   },
   "wins": {
-    "farmshield": 0,
-    "baseline": 2,
+    "farmshield": 1,
+    "baseline": 20,
     "tie": 0,
     "per_metric": {
       "jobs_completed": {
-        "farmshield": 0,
+        "farmshield": 1,
         "baseline": 0,
-        "tie": 2
+        "tie": 20
       },
       "on_time_completions": {
-        "farmshield": 0,
+        "farmshield": 1,
         "baseline": 0,
-        "tie": 2
+        "tie": 20
       },
       "priority_weighted_work": {
-        "farmshield": 2,
+        "farmshield": 1,
         "baseline": 0,
-        "tie": 0
+        "tie": 20
       },
       "travel_time": {
         "farmshield": 0,
-        "baseline": 2,
+        "baseline": 21,
         "tie": 0
       },
       "idle_time": {
-        "farmshield": 0,
+        "farmshield": 21,
         "baseline": 0,
-        "tie": 2
+        "tie": 0
       },
       "missed_deadlines": {
-        "farmshield": 0,
+        "farmshield": 1,
         "baseline": 0,
-        "tie": 2
+        "tie": 20
       },
       "fuel_consumed": {
         "farmshield": 0,
-        "baseline": 2,
+        "baseline": 21,
         "tie": 0
       },
       "safety_violations": {
         "farmshield": 0,
         "baseline": 0,
-        "tie": 2
+        "tie": 21
       },
       "breakdown_recovery_success": {
         "farmshield": 0,
-        "baseline": 0,
-        "tie": 2
+        "baseline": 1,
+        "tie": 20
       }
     }
   },
   "explanations": [
-    "FarmShield average improves priority_weighted_work: baseline=172.000 farmshield=173.000 (+0.58%).",
-    "FarmShield average is worse on travel_time: baseline=50.000 farmshield=51.000 (+2.00%). See methodology \u2014 not a hardcoded claim.",
-    "FarmShield average is worse on fuel_consumed: baseline=50.450 farmshield=50.725 (+0.55%). See methodology \u2014 not a hardcoded claim."
+    "FarmShield average improves jobs_completed: baseline=9.857 farmshield=10.000 (+1.45%).",
+    "FarmShield average improves on_time_completions: baseline=9.857 farmshield=10.000 (+1.45%).",
+    "FarmShield average improves priority_weighted_work: baseline=236.095 farmshield=239.143 (+1.29%).",
+    "FarmShield average is worse on travel_time: baseline=67.143 farmshield=72.286 (+7.66%). See methodology \u2014 not a hardcoded claim.",
+    "FarmShield average improves idle_time: baseline=741.048 farmshield=735.143 (-0.80%).",
+    "FarmShield average improves missed_deadlines: baseline=0.143 farmshield=0.000 (-100.00%).",
+    "FarmShield average is worse on fuel_consumed: baseline=70.489 farmshield=74.827 (+6.15%). See methodology \u2014 not a hardcoded claim.",
+    "FarmShield average is worse on breakdown_recovery_success: baseline=0.667 farmshield=0.619 (-7.14%). See methodology \u2014 not a hardcoded claim."
   ]
 }

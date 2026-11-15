@@ -1,0 +1,68 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-87.1802554, 32.59058587] },
+      "properties": {
+        "role": "metadata",
+        "formatVersion": 1,
+        "name": "FarmShieldSampleField",
+        "originLatitude": 32.59058587,
+        "originLongitude": -87.1802554,
+        "convergence": 0,
+        "areaHectares": 1.0,
+        "createdDate": "2026-11-15T00:00:00.0000000+00:00",
+        "lastModifiedDate": "2026-11-15T00:00:00.0000000+00:00"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [-87.1803, 32.5906, 0.0],
+            [-87.1798, 32.5906, 1.57],
+            [-87.1798, 32.5902, 3.14],
+            [-87.1803, 32.5902, 4.71],
+            [-87.1803, 32.5906, 0.0]
+          ]
+        ]
+      },
+      "properties": {
+        "role": "outer-boundary",
+        "isDriveThrough": false,
+        "isHard": true,
+        "areaHectares": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-87.18025, 32.5905],
+          [-87.1799, 32.5905]
+        ]
+      },
+      "properties": {
+        "role": "track",
+        "name": "AB-1",
+        "trackType": 2,
+        "isClosed": false,
+        "isVisible": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [-87.1801, 32.5904] },
+      "properties": {
+        "role": "flag",
+        "name": "Entrance",
+        "color": 1,
+        "id": 1
+      }
+    }
+  ]
+}

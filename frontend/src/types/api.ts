@@ -6,6 +6,27 @@ export interface HealthResponse {
 
 export type ApiConnectionState = 'checking' | 'connected' | 'disconnected'
 
+export type AgOpenWebStatus = 'connected' | 'disconnected' | 'unsupported'
+
+export interface AgOpenWebIntegration {
+  status: AgOpenWebStatus
+  mode: string
+  message: string
+  integrated: string[]
+  remains_simulated: string[]
+  field: {
+    name: string | null
+    origin_latitude: number | null
+    origin_longitude: number | null
+    format_version: number | null
+    outer_boundary_points: number
+    inner_boundary_count: number
+    track_count: number
+    flag_count: number
+    source_path: string | null
+  } | null
+}
+
 export type TractorStatus = 'idle' | 'traveling' | 'working' | 'refueling' | 'broken'
 export type JobStatus = 'pending' | 'assigned' | 'in_progress' | 'completed' | 'blocked'
 
@@ -141,6 +162,40 @@ export interface AgentMetrics {
   calls_per_committed_decision: number
   overall_replanning_latency_ms: number
   replan_count: number
+}
+
+export interface IncidentAgentMessage {
+  id: string
+  correlation_id: string
+  sim_time: number
+  sender: string
+  receiver: string
+  content: string
+  wall_time: number
+  source: 'llm' | 'fallback' | string
+}
+
+export interface IncidentDialogue {
+  correlation_id: string
+  sim_time: number
+  incident_type: string
+  tractor_id: string
+  job_id: string | null
+  preserved_work_units: number
+  messages: IncidentAgentMessage[]
+  llm_used: boolean
+  note: string
+}
+
+export interface LlmAgentStatus {
+  enabled: boolean
+  configured: boolean
+  provider: string
+  model: string
+  base_url: string
+  api_key_present: boolean
+  dialogue_count: number
+  note: string
 }
 
 export interface ProductivityMetrics {

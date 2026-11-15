@@ -588,4 +588,10 @@ class BenchmarkRunRequest(BaseModel):
     include_main: bool = True
 
 
+class AgOpenWebConfigureRequest(BaseModel):
+    """Path to an AgOpenWeb field.geojson, or null/empty to clear (unsupported)."""
+
+    path: str | None = None
+
+
 PlayMode = Literal["play", "pause"]

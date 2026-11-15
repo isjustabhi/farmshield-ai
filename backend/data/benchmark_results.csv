@@ -1,5 +1,43 @@
 scenario_id,label,seed,horizon,coordinator,jobs_completed,on_time_completions,priority_weighted_work,travel_time,idle_time,missed_deadlines,fuel_consumed,safety_violations,breakdown_recovery_success,breakdown_recovery_attempts
-main_demo,Main demo scenario (no injected incidents),0,40,fcfs_baseline,7,7,176.0,51.0,22.0,0,51.349999999999994,0,0,0
-main_demo,Main demo scenario (no injected incidents),0,40,farmshield,7,7,177.0,52.0,22.0,0,51.624999999999986,0,0,0
-variant_01,Seeded variant 1 (breakdowns/fuel/blocks),1,40,fcfs_baseline,6,6,168.0,49.0,30.0,0,49.54999999999998,0,0,0
-variant_01,Seeded variant 1 (breakdowns/fuel/blocks),1,40,farmshield,6,6,169.0,50.0,30.0,0,49.82499999999999,0,0,0
+main_demo,Main demo scenario (no injected incidents),0,300,fcfs_baseline,10,10,238.0,68.0,769.0,0,71.47499999999997,0,0,0
+main_demo,Main demo scenario (no injected incidents),0,300,farmshield,10,10,238.0,72.0,765.0,0,74.67499999999997,0,0,0
+variant_01,Seeded variant 1 (breakdowns/fuel/blocks),1,300,fcfs_baseline,10,10,238.0,71.0,742.0,0,74.67499999999995,0,0,1
+variant_01,Seeded variant 1 (breakdowns/fuel/blocks),1,300,farmshield,10,10,238.0,75.0,738.0,0,77.87499999999996,0,0,1
+variant_02,Seeded variant 2 (breakdowns/fuel/blocks),2,300,fcfs_baseline,10,10,238.0,68.0,742.0,0,71.47499999999997,0,1,1
+variant_02,Seeded variant 2 (breakdowns/fuel/blocks),2,300,farmshield,10,10,238.0,72.0,738.0,0,74.67499999999997,0,1,1
+variant_03,Seeded variant 3 (breakdowns/fuel/blocks),3,300,fcfs_baseline,10,10,238.0,68.0,741.0,0,71.47499999999997,0,1,1
+variant_03,Seeded variant 3 (breakdowns/fuel/blocks),3,300,farmshield,10,10,238.0,72.0,737.0,0,74.67499999999997,0,1,1
+variant_04,Seeded variant 4 (breakdowns/fuel/blocks),4,300,fcfs_baseline,10,10,250.0,68.0,739.0,0,71.47499999999997,0,0,1
+variant_04,Seeded variant 4 (breakdowns/fuel/blocks),4,300,farmshield,10,10,250.0,72.0,735.0,0,74.67499999999997,0,0,1
+variant_05,Seeded variant 5 (breakdowns/fuel/blocks),5,300,fcfs_baseline,10,10,238.0,68.0,739.0,0,71.47499999999997,0,1,1
+variant_05,Seeded variant 5 (breakdowns/fuel/blocks),5,300,farmshield,10,10,238.0,72.0,735.0,0,74.67499999999997,0,1,1
+variant_06,Seeded variant 6 (breakdowns/fuel/blocks),6,300,fcfs_baseline,10,10,238.0,68.0,738.0,0,71.47499999999997,0,1,1
+variant_06,Seeded variant 6 (breakdowns/fuel/blocks),6,300,farmshield,10,10,238.0,72.0,734.0,0,74.67499999999997,0,1,1
+variant_07,Seeded variant 7 (breakdowns/fuel/blocks),7,300,fcfs_baseline,10,10,238.0,68.0,737.0,0,71.47499999999997,0,1,1
+variant_07,Seeded variant 7 (breakdowns/fuel/blocks),7,300,farmshield,10,10,238.0,73.0,732.0,0,74.67499999999997,0,0,1
+variant_08,Seeded variant 8 (breakdowns/fuel/blocks),8,300,fcfs_baseline,10,10,238.0,68.0,736.0,0,71.47499999999997,0,1,1
+variant_08,Seeded variant 8 (breakdowns/fuel/blocks),8,300,farmshield,10,10,238.0,72.0,732.0,0,74.67499999999997,0,1,1
+variant_09,Seeded variant 9 (breakdowns/fuel/blocks),9,300,fcfs_baseline,7,7,174.0,45.0,774.0,3,47.575,0,1,1
+variant_09,Seeded variant 9 (breakdowns/fuel/blocks),9,300,farmshield,10,10,238.0,72.0,731.0,0,74.67499999999997,0,1,1
+variant_10,Seeded variant 10 (breakdowns/fuel/blocks),10,300,fcfs_baseline,10,10,238.0,69.0,733.0,0,71.47499999999997,0,0,1
+variant_10,Seeded variant 10 (breakdowns/fuel/blocks),10,300,farmshield,10,10,238.0,73.0,729.0,0,74.67499999999997,0,0,1
+variant_11,Seeded variant 11 (breakdowns/fuel/blocks),11,300,fcfs_baseline,10,10,238.0,68.0,733.0,0,71.47499999999997,0,1,1
+variant_11,Seeded variant 11 (breakdowns/fuel/blocks),11,300,farmshield,10,10,238.0,72.0,729.0,0,74.67499999999997,0,1,1
+variant_12,Seeded variant 12 (breakdowns/fuel/blocks),12,300,fcfs_baseline,10,10,238.0,68.0,732.0,0,71.47499999999997,0,1,1
+variant_12,Seeded variant 12 (breakdowns/fuel/blocks),12,300,farmshield,10,10,238.0,72.0,728.0,0,74.67499999999997,0,1,1
+variant_13,Seeded variant 13 (breakdowns/fuel/blocks),13,300,fcfs_baseline,10,10,238.0,69.0,730.0,0,71.47499999999997,0,0,1
+variant_13,Seeded variant 13 (breakdowns/fuel/blocks),13,300,farmshield,10,10,238.0,73.0,726.0,0,74.67499999999997,0,0,1
+variant_14,Seeded variant 14 (breakdowns/fuel/blocks),14,300,fcfs_baseline,10,10,238.0,68.0,730.0,0,71.47499999999997,0,1,1
+variant_14,Seeded variant 14 (breakdowns/fuel/blocks),14,300,farmshield,10,10,238.0,72.0,726.0,0,74.67499999999997,0,1,1
+variant_15,Seeded variant 15 (breakdowns/fuel/blocks),15,300,fcfs_baseline,10,10,238.0,68.0,744.0,0,71.47499999999997,0,1,1
+variant_15,Seeded variant 15 (breakdowns/fuel/blocks),15,300,farmshield,10,10,238.0,72.0,740.0,0,74.67499999999997,0,1,1
+variant_16,Seeded variant 16 (breakdowns/fuel/blocks),16,300,fcfs_baseline,10,10,238.0,68.0,742.0,0,71.47499999999997,0,0,1
+variant_16,Seeded variant 16 (breakdowns/fuel/blocks),16,300,farmshield,10,10,238.0,72.0,738.0,0,74.67499999999997,0,0,1
+variant_17,Seeded variant 17 (breakdowns/fuel/blocks),17,300,fcfs_baseline,10,10,238.0,68.0,742.0,0,71.47499999999997,0,1,1
+variant_17,Seeded variant 17 (breakdowns/fuel/blocks),17,300,farmshield,10,10,238.0,72.0,738.0,0,74.67499999999997,0,1,1
+variant_18,Seeded variant 18 (breakdowns/fuel/blocks),18,300,fcfs_baseline,10,10,238.0,68.0,741.0,0,71.47499999999997,0,1,1
+variant_18,Seeded variant 18 (breakdowns/fuel/blocks),18,300,farmshield,10,10,238.0,72.0,737.0,0,74.67499999999997,0,1,1
+variant_19,Seeded variant 19 (breakdowns/fuel/blocks),19,300,fcfs_baseline,10,10,238.0,68.0,739.0,0,71.47499999999997,0,0,1
+variant_19,Seeded variant 19 (breakdowns/fuel/blocks),19,300,farmshield,10,10,238.0,72.0,735.0,0,74.67499999999997,0,0,1
+variant_20,Seeded variant 20 (breakdowns/fuel/blocks),20,300,fcfs_baseline,10,10,250.0,68.0,739.0,0,71.47499999999997,0,1,1
+variant_20,Seeded variant 20 (breakdowns/fuel/blocks),20,300,farmshield,10,10,250.0,72.0,735.0,0,74.67499999999997,0,1,1

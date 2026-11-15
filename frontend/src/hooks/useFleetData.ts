@@ -3,9 +3,12 @@ import { api } from '../services/api'
 import type {
   AgentMetrics,
   AgentTrace,
+  AgOpenWebIntegration,
   ApiConnectionState,
   AssignmentDecision,
   ChaosEventResult,
+  IncidentDialogue,
+  LlmAgentStatus,
   MemoryIncident,
   MemoryRun,
   RecoveryLogEntry,
@@ -15,12 +18,15 @@ import type {
 
 interface FleetData {
   connection: ApiConnectionState
+  agopenweb: AgOpenWebIntegration | null
   state: SimulationState | null
   events: SimEvent[]
   decisions: AssignmentDecision[]
   recoveryLogs: RecoveryLogEntry[]
   traces: AgentTrace[]
   metrics: AgentMetrics | null
+  dialogues: IncidentDialogue[]
+  llmStatus: LlmAgentStatus | null
   incidents: MemoryIncident[]
   runs: MemoryRun[]
   currentRunId: string | null
@@ -45,12 +51,15 @@ interface FleetData {
 
 export function useFleetData(pollMs = 800): FleetData {
   const [connection, setConnection] = useState<ApiConnectionState>('checking')
+  const [agopenweb, setAgopenweb] = useState<AgOpenWebIntegration | null>(null)
   const [state, setState] = useState<SimulationState | null>(null)
   const [events, setEvents] = useState<SimEvent[]>([])
   const [decisions, setDecisions] = useState<AssignmentDecision[]>([])
   const [recoveryLogs, setRecoveryLogs] = useState<RecoveryLogEntry[]>([])
   const [traces, setTraces] = useState<AgentTrace[]>([])
   const [metrics, setMetrics] = useState<AgentMetrics | null>(null)
+  const [dialogues, setDialogues] = useState<IncidentDialogue[]>([])
+  const [llmStatus, setLlmStatus] = useState<LlmAgentStatus | null>(null)
   const [incidents, setIncidents] = useState<MemoryIncident[]>([])
   const [runs, setRuns] = useState<MemoryRun[]>([])
   const [currentRunId, setCurrentRunId] = useState<string | null>(null)
@@ -61,24 +70,39 @@ export function useFleetData(pollMs = 800): FleetData {
 
   const refresh = useCallback(async () => {
     try {
-      const [nextState, eventPayload, decisionPayload, recovery, tracePayload, metricPayload, incidentPayload, runPayload] =
-        await Promise.all([
-          api.getState(),
-          api.getEvents(),
-          api.getDecisions(),
-          api.getRecoveryLogs(),
-          api.getAgentTraces(),
-          api.getAgentMetrics(),
-          api.getMemoryIncidents(),
-          api.getMemoryRuns(),
-        ])
+      const [
+        nextState,
+        eventPayload,
+        decisionPayload,
+        recovery,
+        tracePayload,
+        metricPayload,
+        incidentPayload,
+        runPayload,
+        aow,
+        llmPayload,
+      ] = await Promise.all([
+        api.getState(),
+        api.getEvents(),
+        api.getDecisions(),
+        api.getRecoveryLogs(),
+        api.getAgentTraces(),
+        api.getAgentMetrics(),
+        api.getMemoryIncidents(),
+        api.getMemoryRuns(),
+        api.getAgOpenWebStatus(),
+        api.getLlmDialogues(),
+      ])
       if (!mounted.current) return
       setState(nextState)
+      setAgopenweb(aow)
       setEvents(eventPayload.events.slice(-80).reverse())
       setDecisions(decisionPayload.decisions)
       setRecoveryLogs(recovery.logs.slice().reverse())
       setTraces(tracePayload.traces.slice(-40).reverse())
       setMetrics(metricPayload)
+      setDialogues(llmPayload.dialogues.slice().reverse())
+      setLlmStatus(llmPayload.status)
       setIncidents(incidentPayload.incidents)
       setRuns(runPayload.runs)
       setCurrentRunId(runPayload.current_run_id)
@@ -138,12 +162,15 @@ export function useFleetData(pollMs = 800): FleetData {
 
   return {
     connection,
+    agopenweb,
     state,
     events,
     decisions,
     recoveryLogs,
     traces,
     metrics,
+    dialogues,
+    llmStatus,
     incidents,
     runs,
     currentRunId,

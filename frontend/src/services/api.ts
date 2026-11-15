@@ -1,6 +1,9 @@
 import type {
   AgentMetrics,
   AgentTrace,
+  AgOpenWebIntegration,
+  IncidentDialogue,
+  LlmAgentStatus,
   AssignmentDecision,
   BenchmarkReport,
   ChaosEventResult,
@@ -38,6 +41,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const api = {
   getHealth: () => request<HealthResponse>('/health'),
+  getAgOpenWebStatus: () => request<AgOpenWebIntegration>('/agopenweb/status'),
   getState: () => request<SimulationState>('/state'),
   getEvents: (afterId = 0) =>
     request<{ events: SimEvent[]; sim_time: number }>(`/events?after_id=${afterId}`),
@@ -52,6 +56,11 @@ export const api = {
   getAgentTraces: () =>
     request<{ traces: AgentTrace[]; count: number }>('/agents/traces'),
   getAgentMetrics: () => request<AgentMetrics>('/agents/metrics'),
+  getLlmDialogues: () =>
+    request<{ dialogues: IncidentDialogue[]; count: number; status: LlmAgentStatus }>(
+      '/agents/llm/dialogues',
+    ),
+  getLlmStatus: () => request<LlmAgentStatus>('/agents/llm/status'),
   getProductivityMetrics: (params?: { tractor_id?: string; run_id?: string }) => {
     const q = new URLSearchParams()
     if (params?.tractor_id) q.set('tractor_id', params.tractor_id)

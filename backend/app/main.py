@@ -1,8 +1,13 @@
 """FarmShield AI FastAPI entrypoint."""
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
+from .agopenweb import AgOpenWebIntegrationStatus, agopenweb_adapter
+from .llm_config import reload_llm_settings
+from .llm_agents import llm_agent_bus, llm_status
 from .benchmark import (
     DEFAULT_HORIZON,
     DEFAULT_VARIANT_COUNT,
@@ -26,6 +31,7 @@ from .chaos import (
 from .models import (
     AgentMetricsResponse,
     AgentTracesResponse,
+    AgOpenWebConfigureRequest,
     AssignmentsResponse,
     BenchmarkRunRequest,
     BlockRouteRequest,
@@ -66,10 +72,18 @@ from .orchestration import (
 from .scheduler import fleet_agent
 from .simulation import SimulationError, simulation
 
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    reload_llm_settings()
+    yield
+
+
 app = FastAPI(
     title="FarmShield AI",
     description="Autonomous tractor fleet coordinator for the ATC Run the Fleet challenge.",
     version="0.1.0",
+    lifespan=lifespan,
 )
 
 app.add_middleware(
@@ -89,6 +103,23 @@ app.add_middleware(
 def health() -> HealthResponse:
     """Return API health for frontend connectivity checks."""
     return HealthResponse(status="ok")
+
+
+@app.get("/api/agopenweb/status", response_model=AgOpenWebIntegrationStatus)
+def agopenweb_status() -> AgOpenWebIntegrationStatus:
+    """AgOpenWeb optional integration status (read-only field.geojson)."""
+    return agopenweb_adapter.status()
+
+
+@app.post("/api/agopenweb/configure", response_model=AgOpenWebIntegrationStatus)
+def agopenweb_configure(body: AgOpenWebConfigureRequest) -> AgOpenWebIntegrationStatus:
+    """Configure or clear path to an AgOpenWeb field.geojson file."""
+    return agopenweb_adapter.configure_path(body.path)
+
+
+@app.post("/api/agopenweb/reload", response_model=AgOpenWebIntegrationStatus)
+def agopenweb_reload() -> AgOpenWebIntegrationStatus:
+    return agopenweb_adapter.reload()
 
 
 @app.get("/api/state", response_model=SimulationState)
@@ -179,6 +210,23 @@ def get_agent_traces(after_index: int = Query(default=0, ge=0)) -> AgentTracesRe
 @app.get("/api/agents/metrics", response_model=AgentMetricsResponse)
 def get_agent_metrics() -> AgentMetricsResponse:
     return agent_observability.metrics()
+
+
+@app.get("/api/agents/llm/status")
+def get_llm_agent_status() -> dict:
+    """Whether LLM incident agents are configured (keys never returned)."""
+    return llm_status()
+
+
+@app.get("/api/agents/llm/dialogues")
+def get_llm_dialogues(limit: int = Query(default=40, ge=1, le=200)) -> dict:
+    """Fleet ↔ Recovery ↔ Safety incident chat (LLM or deterministic fallback)."""
+    dialogues = llm_agent_bus.list_dialogues(limit=limit)
+    return {
+        "dialogues": [d.model_dump() for d in dialogues],
+        "count": len(dialogues),
+        "status": llm_status(),
+    }
 
 
 def _resolve_productivity_ledger(run_id: str | None) -> tuple[FleetProductivityLedger, str | None, int]:

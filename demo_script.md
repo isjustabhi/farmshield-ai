@@ -36,7 +36,7 @@ Open **http://127.0.0.1:5173** → Command Center. Click **Reset**, then **Sched
 **Say:** “The clock is simulated minutes. Tractors travel with A*, then work down real job units and fuel.”
 
 **Do:**
-1. Click **Play** (or Step repeatedly).
+1. Click **Play** (about 0.4s wall-clock per simulated minute — readable demo pace) or **Step** for full control.
 2. Watch paths animate and job progress bars / completed work units increase.
 3. Glance at the event feed: `travel_start`, `arrival`, `job_start`, `progress_milestone`.
 

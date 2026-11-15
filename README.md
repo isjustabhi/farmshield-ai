@@ -67,7 +67,14 @@ pip install -r requirements.txt
 
 # Frontend
 cd frontend && npm install && cd ..
+
+# Optional: LLM incident agents (paste keys — .env is gitignored)
+cp .env.example .env
+# Anthropic Claude: LLM_PROVIDER=anthropic, LLM_API_KEY=sk-ant-...
+# OpenAI:          LLM_PROVIDER=openai, LLM_API_KEY=sk-...
 ```
+
+Without a key, agents still talk via a deterministic fallback after breakdowns. With a Claude/OpenAI key, Fleet / Recovery / Safety LLM personas exchange messages. They **never** bypass Safety or invent telemetry.
 
 ## How to run
 
@@ -178,7 +185,17 @@ python -c "from app.benchmark import run_benchmark; run_benchmark()"
 
 ## AgOpenWeb integration
 
-**Not integrated.** FarmShield uses a custom deterministic grid simulator suitable for hackathon demos and reproducible benchmarks. No AgOpenGPS / AgOpenWeb bridge, ROS, or ISOBUS stack is claimed.
+Investigated against [AgOpenGPS-Official/AgOpenWeb](https://github.com/AgOpenGPS-Official/AgOpenWeb).
+
+**Finding:** AgOpenWeb does **not** expose a public REST API for fleet command or live tractor telemetry. It is a cab guidance host (UI ~`:5174`). Documented third-party surface is primarily **`field.geojson`** (`Docs/FIELD_FILE_FORMATS.md`). Live fixes use NMEA/UDP PGN for hardware modules — not claimed here.
+
+**What we ship:** optional **read-only** `AgOpenWebAdapter` + top-nav status (`Unsupported` / `Disconnected` / `Connected`). See [`docs/AGOPENWEB.md`](docs/AGOPENWEB.md).
+
+| When Connected | Still simulated |
+| --- | --- |
+| Field name, WGS84 origin, boundary/track/flag metadata from GeoJSON | Tractor motion, jobs, fuel, scheduling, recovery, grid routes |
+
+We do **not** claim real tractor control or fabricated GPS streams. Default status is **Unsupported** (custom simulator fully functional).
 
 ## Known limitations
 
@@ -219,6 +236,8 @@ cd backend && python scripts/generate_demo_and_verify.py
 | POST | `/api/simulation/{reset,step,play,pause}` | Control |
 | POST | `/api/schedule` | Plan + apply |
 | GET | `/api/agents/traces` | AgentBus traces |
+| GET | `/api/agents/llm/status` | LLM key configured? (no secrets) |
+| GET | `/api/agents/llm/dialogues` | Incident agent-to-agent chat |
 | GET | `/api/metrics/productivity` | Fleet productivity |
 | GET | `/api/metrics/agents` | Coordination metrics |
 | GET | `/api/metrics/timeline` | Series + decision traces |

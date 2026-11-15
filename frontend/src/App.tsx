@@ -22,6 +22,7 @@ export default function App() {
       <div className="flex min-w-0 flex-1 flex-col">
         <TopNav
           connection={fleet.connection}
+          agopenweb={fleet.agopenweb}
           state={fleet.state}
           busy={fleet.busy}
           onPlay={() => void fleet.play()}
@@ -85,7 +86,12 @@ export default function App() {
                 />
               )}
               {view === 'agents' && (
-                <AgentNetworkPage traces={fleet.traces} metrics={fleet.metrics} />
+                <AgentNetworkPage
+                  traces={fleet.traces}
+                  metrics={fleet.metrics}
+                  dialogues={fleet.dialogues}
+                  llmStatus={fleet.llmStatus}
+                />
               )}
               {view === 'memory' && (
                 <IncidentMemoryPage incidents={fleet.incidents} runs={fleet.runs} />

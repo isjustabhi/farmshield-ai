@@ -432,6 +432,20 @@ def breakdown_and_recover(
         },
     )
 
+    _emit_incident_dialogue(
+        sim,
+        sim_time=int(snapshot["sim_time"]),
+        tractor_id=tractor_id,
+        job_id=job_id,
+        reason=reason,
+        preserved_work_units=preserved,
+        percent_complete=None if percent is None else float(percent),
+        reassigned_to=reassigned_to,
+        blocking_reason=blocking,
+        correlation_id=correlation_id,
+        incident_type="breakdown",
+    )
+
     return BreakdownResponse(
         ok=True,
         state=sim.get_state(),
@@ -646,11 +660,61 @@ def handle_simulation_incident(
             feasible=reassigned_to is not None or job_id is None,
         )
     )
+
+    _emit_incident_dialogue(
+        sim,
+        sim_time=int(simulation_timestamp),
+        tractor_id=tractor_id,
+        job_id=job_id,
+        reason=reason,
+        preserved_work_units=float(completed_work_units),
+        percent_complete=None if percent_complete is None else float(percent_complete),
+        reassigned_to=reassigned_to,
+        blocking_reason=blocking,
+        correlation_id=correlation_id,
+        incident_type="breakdown",
+    )
     return proposal
+
+
+def _emit_incident_dialogue(
+    sim: Any,
+    *,
+    sim_time: int,
+    tractor_id: str,
+    job_id: str | None,
+    reason: str,
+    preserved_work_units: float,
+    percent_complete: float | None,
+    reassigned_to: str | None,
+    blocking_reason: str | None,
+    correlation_id: str,
+    incident_type: str,
+) -> None:
+    """LLM (or fallback) agent chat after incidents — never used for Safety commits."""
+    if getattr(sim, "isolated", False):
+        return
+    from .llm_agents import run_incident_dialogue
+
+    run_incident_dialogue(
+        sim_time=sim_time,
+        tractor_id=tractor_id,
+        job_id=job_id,
+        reason=reason,
+        preserved_work_units=preserved_work_units,
+        percent_complete=percent_complete,
+        reassigned_to=reassigned_to,
+        blocking_reason=blocking_reason,
+        correlation_id=correlation_id,
+        incident_type=incident_type,
+    )
 
 
 def clear_fleet_memory(agent: FleetAgent | None = None) -> None:
     (agent or fleet_agent).clear()
     agent_observability.clear()
     memory_service.recovery_memory.clear()
+    from .llm_agents import llm_agent_bus
+
+    llm_agent_bus.clear()
     # Does not wipe SQLite historical runs.
