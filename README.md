@@ -190,17 +190,10 @@ cd frontend && npm run build
 
 ### Static site (GitHub Pages)
 
-The React UI can be published as a **static** site (no FastAPI on Pages).  
-Live sim still needs the API locally or on a host.
-
-After push to `main`, Actions deploys the Vite UI here (not your portfolio domain):  
+UI preview (example snapshot when the API is not running):  
 **https://isjustabhi.github.io/farmshield-ai/**
 
-Do **not** use `isjustabhi.com/farmshield-ai` — that domain is your Vercel portfolio.  
-Repo → Settings → Pages → Source: **GitHub Actions**.
-
-Without the API, Pages loads a **static example snapshot** (fleet mid-run, farm radio, traces).  
-Controls need FastAPI locally for a live sim.
+For the full live demo, run FastAPI locally as above.
 
 ## How to trigger incidents
 
