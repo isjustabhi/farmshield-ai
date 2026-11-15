@@ -31,6 +31,8 @@ jobs:
         run: |
           npm ci
           npm run build
+          # Prevent GitHub from treating the SPA as a Jekyll README site
+          touch dist/.nojekyll
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
