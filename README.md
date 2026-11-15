@@ -18,8 +18,6 @@ Static preview: [https://isjustabhi.github.io/farmshield-ai/](https://isjustabhi
 | Claude (optional) | After a breakdown, agents talk in plain language about what happened. |
 | AgOpenWeb field file (optional) | Read-only `field.geojson` metadata. Not tractor control. |
 
-We use APIs. The rule is simple: **LLM is the radio. Safety is the boss.**
-
 ---
 
 ## The scenario
@@ -65,7 +63,7 @@ Fleet → Sim:  Commit only if approved.
 
 If Safety rejects, that pair is skipped. Fleet does not force it through.
 
-You can watch this live on **Command Center / Agent Network** as farm radio lines and AgentBus traces (`fleet_agent → navigation_agent → safety_agent`).
+This appears on **Command Center / Agent Network** as AgentBus traces (`fleet_agent → navigation_agent → safety_agent`).
 
 ### When something fails
 
@@ -219,7 +217,7 @@ For the full live demo, run FastAPI locally as above.
 
 ## Agent communication design (technical)
 
-`AgentBus` wraps in-process calls with `time.perf_counter()` latency. Each hop records an `AgentTrace` (sender, receiver, request/response types, status, `correlation_id`, optional `decision_id`, simulation timestamp). Transport is `in_process`, not a fake network RPC. Traces persist to SQLite and show on Agent Network / farm radio. LLM incident dialogues are separate (`/api/agents/llm/dialogues`) and never commit assigns.
+`AgentBus` wraps in-process calls with `time.perf_counter()` latency. Each hop records an `AgentTrace` (sender, receiver, request/response types, status, `correlation_id`, optional `decision_id`, simulation timestamp). Transport is `in_process`. Traces persist to SQLite and show on Agent Network. LLM incident dialogues are separate (`/api/agents/llm/dialogues`) and never commit assigns.
 
 ## Operational memory design
 
