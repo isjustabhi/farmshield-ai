@@ -1,9 +1,12 @@
 import { useMemo, useState } from 'react'
+import { AgentDashboard } from '../components/agents/AgentDashboard'
 import { FarmGrid } from '../components/grid/FarmGrid'
 import { GlassPanel } from '../components/ui/GlassPanel'
 import type {
   AgentTrace,
   ChaosEventResult,
+  IncidentDialogue,
+  LlmAgentStatus,
   RecoveryLogEntry,
   SimEvent,
   SimulationState,
@@ -15,6 +18,8 @@ interface ChaosLabPageProps {
   events: SimEvent[]
   recoveryLogs: RecoveryLogEntry[]
   traces: AgentTrace[]
+  dialogues: IncidentDialogue[]
+  llmStatus: LlmAgentStatus | null
   lastChaos: ChaosEventResult | null
   onBreakdown: (id: string) => void
   onRepair: (id: string) => void
@@ -32,6 +37,8 @@ export function ChaosLabPage({
   events,
   recoveryLogs,
   traces,
+  dialogues,
+  llmStatus,
   lastChaos,
   onBreakdown,
   onRepair,
@@ -59,6 +66,13 @@ export function ChaosLabPage({
 
   return (
     <div className="space-y-4">
+      <AgentDashboard
+        traces={traces}
+        dialogues={dialogues}
+        llmStatus={llmStatus}
+        compact
+      />
+
       <div className="grid gap-4 xl:grid-cols-[300px_minmax(0,1.2fr)_340px]">
         <GlassPanel title="Event selection">
           <div className="space-y-3 text-xs">

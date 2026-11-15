@@ -150,6 +150,9 @@ export interface AgentTrace {
   status: string
   simulation_timestamp: number
   transport: string
+  start_wall_time?: number
+  end_wall_time?: number
+  detail?: Record<string, unknown>
 }
 
 export interface AgentMetrics {

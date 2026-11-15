@@ -53,6 +53,9 @@ export default function App() {
                   decisions={fleet.decisions}
                   events={fleet.events}
                   recoveryLogs={fleet.recoveryLogs}
+                  traces={fleet.traces}
+                  dialogues={fleet.dialogues}
+                  llmStatus={fleet.llmStatus}
                   busy={fleet.busy}
                   onBreakdown={(id) => void fleet.breakdown(id)}
                   onRepair={(id) => void fleet.repair(id)}
@@ -67,6 +70,8 @@ export default function App() {
                   events={fleet.events}
                   recoveryLogs={fleet.recoveryLogs}
                   traces={fleet.traces}
+                  dialogues={fleet.dialogues}
+                  llmStatus={fleet.llmStatus}
                   lastChaos={fleet.lastChaos}
                   onBreakdown={(id) => void fleet.breakdown(id)}
                   onRepair={(id) => void fleet.repair(id)}

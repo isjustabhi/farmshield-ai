@@ -1,16 +1,26 @@
 import { useMemo, useState } from 'react'
+import { AgentDashboard } from '../components/agents/AgentDashboard'
 import { FarmGrid } from '../components/grid/FarmGrid'
 import { DetailsPanel } from '../components/panels/DetailsPanel'
 import { TimelinePanel } from '../components/panels/TimelinePanel'
 import { GlassPanel } from '../components/ui/GlassPanel'
 import { jobProgressPct } from '../lib/fleetDerived'
-import type { AssignmentDecision, SimulationState } from '../types/api'
+import type {
+  AgentTrace,
+  AssignmentDecision,
+  IncidentDialogue,
+  LlmAgentStatus,
+  SimulationState,
+} from '../types/api'
 
 interface CommandCenterPageProps {
   state: SimulationState
   decisions: AssignmentDecision[]
   events: Parameters<typeof TimelinePanel>[0]['events']
   recoveryLogs: Parameters<typeof TimelinePanel>[0]['recoveryLogs']
+  traces: AgentTrace[]
+  dialogues: IncidentDialogue[]
+  llmStatus: LlmAgentStatus | null
   busy: boolean
   onBreakdown: (id: string) => void
   onRepair: (id: string) => void
@@ -21,6 +31,9 @@ export function CommandCenterPage({
   decisions,
   events,
   recoveryLogs,
+  traces,
+  dialogues,
+  llmStatus,
   busy,
   onBreakdown,
   onRepair,
@@ -40,6 +53,13 @@ export function CommandCenterPage({
 
   return (
     <div className="space-y-4">
+      <AgentDashboard
+        traces={traces}
+        dialogues={dialogues}
+        llmStatus={llmStatus}
+        compact
+      />
+
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.6fr)_minmax(320px,0.9fr)]">
         <GlassPanel
           title="Live farm grid"

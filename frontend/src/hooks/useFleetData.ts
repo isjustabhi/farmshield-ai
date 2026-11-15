@@ -99,7 +99,8 @@ export function useFleetData(pollMs = 800): FleetData {
       setEvents(eventPayload.events.slice(-80).reverse())
       setDecisions(decisionPayload.decisions)
       setRecoveryLogs(recovery.logs.slice().reverse())
-      setTraces(tracePayload.traces.slice(-40).reverse())
+      // Keep enough traces so multi-step handshakes (Nav+Safety) are not cut mid-pair
+      setTraces(tracePayload.traces.slice(-120).reverse())
       setMetrics(metricPayload)
       setDialogues(llmPayload.dialogues.slice().reverse())
       setLlmStatus(llmPayload.status)
