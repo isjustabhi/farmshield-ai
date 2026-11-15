@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  --fs-bg: #0b1220;
+  --fs-bg-elevated: #121a2b;
+  --fs-panel: rgba(18, 28, 46, 0.78);
+  --fs-panel-border: rgba(148, 163, 184, 0.14);
+  --fs-emerald: #10b981;
+  --fs-emerald-dim: rgba(16, 185, 129, 0.16);
+  --fs-amber: #f59e0b;
+  --fs-amber-dim: rgba(245, 158, 11, 0.16);
+  --fs-red: #ef4444;
+  --fs-red-dim: rgba(239, 68, 68, 0.16);
+  --fs-text: #e8eef8;
+  --fs-muted: #94a3b8;
+  --fs-grid: rgba(148, 163, 184, 0.12);
+  color: var(--fs-text);
+  background: var(--fs-bg);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at top left, rgba(16, 185, 129, 0.08), transparent 42%),
+    radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.06), transparent 40%),
+    var(--fs-bg);
+}
+
+button {
+  font: inherit;
+}
+
+.fs-glass {
+  background: var(--fs-panel);
+  border: 1px solid var(--fs-panel-border);
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.fs-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+
+@keyframes fs-pulse-soft {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.fs-pulse {
+  animation: fs-pulse-soft 1.8s ease-in-out infinite;
+}
+
+@keyframes fs-path-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.fs-path-animate {
+  stroke-dasharray: 6 8;
+  animation: fs-path-dash 1.2s linear infinite;
+}

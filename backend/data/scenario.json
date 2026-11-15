@@ -1,0 +1,244 @@
+{
+  "name": "hackathon_demo_v1",
+  "seed": 42,
+  "grid": {
+    "width": 20,
+    "height": 20
+  },
+  "depot": { "x": 0, "y": 0 },
+  "fuel": {
+    "travel_per_cell": 0.4,
+    "work_per_unit": 0.35,
+    "safety_reserve": 5.0
+  },
+  "obstacles": [],
+  "fields": [
+    {
+      "id": "field_01",
+      "name": "North Orchard",
+      "position": { "x": 2, "y": 2 },
+      "job_ids": ["job_01", "job_02"]
+    },
+    {
+      "id": "field_02",
+      "name": "East Meadow",
+      "position": { "x": 2, "y": 10 },
+      "job_ids": ["job_03"]
+    },
+    {
+      "id": "field_03",
+      "name": "River Bend",
+      "position": { "x": 2, "y": 17 },
+      "job_ids": ["job_04"]
+    },
+    {
+      "id": "field_04",
+      "name": "Center Plot",
+      "position": { "x": 10, "y": 2 },
+      "job_ids": ["job_05", "job_06"]
+    },
+    {
+      "id": "field_05",
+      "name": "Homestead Flat",
+      "position": { "x": 10, "y": 10 },
+      "job_ids": ["job_07"]
+    },
+    {
+      "id": "field_06",
+      "name": "South Ridge",
+      "position": { "x": 10, "y": 17 },
+      "job_ids": ["job_08"]
+    },
+    {
+      "id": "field_07",
+      "name": "West Pasture",
+      "position": { "x": 17, "y": 2 },
+      "job_ids": ["job_09"]
+    },
+    {
+      "id": "field_08",
+      "name": "Corner Acre",
+      "position": { "x": 17, "y": 10 },
+      "job_ids": ["job_10"]
+    }
+  ],
+  "tractors": [
+    {
+      "id": "tractor_01",
+      "name": "Shield-Alpha",
+      "implement_type": "spraying",
+      "fuel_level": 95.0,
+      "fuel_capacity": 100.0,
+      "working_speed": 1.0,
+      "travel_speed": 2.0,
+      "position": { "x": 0, "y": 0 },
+      "status": "idle",
+      "assigned_job_id": null,
+      "path": [],
+      "path_index": 0,
+      "travel_cell_progress": 0.0
+    },
+    {
+      "id": "tractor_02",
+      "name": "Shield-Bravo",
+      "implement_type": "mowing",
+      "fuel_level": 90.0,
+      "fuel_capacity": 100.0,
+      "working_speed": 1.2,
+      "travel_speed": 2.0,
+      "position": { "x": 19, "y": 0 },
+      "status": "idle",
+      "assigned_job_id": null,
+      "path": [],
+      "path_index": 0,
+      "travel_cell_progress": 0.0
+    },
+    {
+      "id": "tractor_03",
+      "name": "Shield-Charlie",
+      "implement_type": "spraying",
+      "fuel_level": 85.0,
+      "fuel_capacity": 100.0,
+      "working_speed": 0.8,
+      "travel_speed": 1.5,
+      "position": { "x": 0, "y": 19 },
+      "status": "idle",
+      "assigned_job_id": null,
+      "path": [],
+      "path_index": 0,
+      "travel_cell_progress": 0.0
+    }
+  ],
+  "jobs": [
+    {
+      "id": "job_01",
+      "field_id": "field_01",
+      "job_type": "spraying",
+      "priority": 1,
+      "deadline_minute": 120,
+      "estimated_work_units": 8.0,
+      "completed_work_units": 0.0,
+      "status": "pending",
+      "assigned_tractor_id": null,
+      "sequence": 1,
+      "depends_on_job_id": null
+    },
+    {
+      "id": "job_02",
+      "field_id": "field_01",
+      "job_type": "mowing",
+      "priority": 2,
+      "deadline_minute": 180,
+      "estimated_work_units": 6.0,
+      "completed_work_units": 0.0,
+      "status": "blocked",
+      "assigned_tractor_id": null,
+      "sequence": 2,
+      "depends_on_job_id": "job_01"
+    },
+    {
+      "id": "job_03",
+      "field_id": "field_02",
+      "job_type": "spraying",
+      "priority": 2,
+      "deadline_minute": 150,
+      "estimated_work_units": 5.0,
+      "completed_work_units": 0.0,
+      "status": "pending",
+      "assigned_tractor_id": null,
+      "sequence": 1,
+      "depends_on_job_id": null
+    },
+    {
+      "id": "job_04",
+      "field_id": "field_03",
+      "job_type": "mowing",
+      "priority": 3,
+      "deadline_minute": 200,
+      "estimated_work_units": 7.0,
+      "completed_work_units": 0.0,
+      "status": "pending",
+      "assigned_tractor_id": null,
+      "sequence": 1,
+      "depends_on_job_id": null
+    },
+    {
+      "id": "job_05",
+      "field_id": "field_04",
+      "job_type": "spraying",
+      "priority": 1,
+      "deadline_minute": 100,
+      "estimated_work_units": 9.0,
+      "completed_work_units": 0.0,
+      "status": "pending",
+      "assigned_tractor_id": null,
+      "sequence": 1,
+      "depends_on_job_id": null
+    },
+    {
+      "id": "job_06",
+      "field_id": "field_04",
+      "job_type": "mowing",
+      "priority": 2,
+      "deadline_minute": 160,
+      "estimated_work_units": 4.0,
+      "completed_work_units": 0.0,
+      "status": "blocked",
+      "assigned_tractor_id": null,
+      "sequence": 2,
+      "depends_on_job_id": "job_05"
+    },
+    {
+      "id": "job_07",
+      "field_id": "field_05",
+      "job_type": "spraying",
+      "priority": 3,
+      "deadline_minute": 220,
+      "estimated_work_units": 6.0,
+      "completed_work_units": 0.0,
+      "status": "pending",
+      "assigned_tractor_id": null,
+      "sequence": 1,
+      "depends_on_job_id": null
+    },
+    {
+      "id": "job_08",
+      "field_id": "field_06",
+      "job_type": "mowing",
+      "priority": 2,
+      "deadline_minute": 170,
+      "estimated_work_units": 5.5,
+      "completed_work_units": 0.0,
+      "status": "pending",
+      "assigned_tractor_id": null,
+      "sequence": 1,
+      "depends_on_job_id": null
+    },
+    {
+      "id": "job_09",
+      "field_id": "field_07",
+      "job_type": "spraying",
+      "priority": 4,
+      "deadline_minute": 240,
+      "estimated_work_units": 4.0,
+      "completed_work_units": 0.0,
+      "status": "pending",
+      "assigned_tractor_id": null,
+      "sequence": 1,
+      "depends_on_job_id": null
+    },
+    {
+      "id": "job_10",
+      "field_id": "field_08",
+      "job_type": "mowing",
+      "priority": 3,
+      "deadline_minute": 210,
+      "estimated_work_units": 8.0,
+      "completed_work_units": 0.0,
+      "status": "pending",
+      "assigned_tractor_id": null,
+      "sequence": 1,
+      "depends_on_job_id": null
+    }
+  ]
+}

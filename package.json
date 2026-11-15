@@ -1,0 +1,15 @@
+{
+  "name": "farmshield-ai",
+  "private": true,
+  "version": "0.1.0",
+  "description": "FarmShield AI — autonomous tractor fleet coordinator (ATC Run the Fleet)",
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "preview": "npm --prefix frontend run preview",
+    "lint": "npm --prefix frontend run lint"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

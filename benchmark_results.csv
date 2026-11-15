@@ -1,0 +1,5 @@
+scenario_id,label,seed,horizon,coordinator,jobs_completed,on_time_completions,priority_weighted_work,travel_time,idle_time,missed_deadlines,fuel_consumed,safety_violations,breakdown_recovery_success,breakdown_recovery_attempts
+main_demo,Main demo scenario (no injected incidents),0,40,fcfs_baseline,7,7,176.0,51.0,22.0,0,51.349999999999994,0,0,0
+main_demo,Main demo scenario (no injected incidents),0,40,farmshield,7,7,177.0,52.0,22.0,0,51.624999999999986,0,0,0
+variant_01,Seeded variant 1 (breakdowns/fuel/blocks),1,40,fcfs_baseline,6,6,168.0,49.0,30.0,0,49.54999999999998,0,0,0
+variant_01,Seeded variant 1 (breakdowns/fuel/blocks),1,40,farmshield,6,6,169.0,50.0,30.0,0,49.82499999999999,0,0,0

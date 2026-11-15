@@ -1,0 +1,1738 @@
+{
+  "generated_at": "2026-11-15T20:46:12.174479+00:00",
+  "source": "backend/scripts/generate_demo_and_verify.py",
+  "scenario": "hackathon_demo_v1",
+  "seed": 42,
+  "final_sim_time": 64,
+  "phases": [
+    {
+      "phase": "0-15_assign",
+      "sim_time": 5,
+      "assigned_jobs": 3,
+      "assignments": [
+        {
+          "job_id": "job_01",
+          "tractor_id": "tractor_01"
+        },
+        {
+          "job_id": "job_03",
+          "tractor_id": "tractor_03"
+        },
+        {
+          "job_id": "job_08",
+          "tractor_id": "tractor_02"
+        }
+      ]
+    },
+    {
+      "phase": "15-30_progress",
+      "sim_time": 30,
+      "active_tractors": [
+        "tractor_01",
+        "tractor_02",
+        "tractor_03"
+      ],
+      "total_completed_work_units": 33.1
+    },
+    {
+      "phase": "30-45_breakdown",
+      "sim_time": 30,
+      "tractor_id": "tractor_03",
+      "released_job_id": "job_07",
+      "preserved_work_units": 5.6
+    },
+    {
+      "phase": "45-60_recovery",
+      "sim_time": 34,
+      "reassigned_to": "tractor_01",
+      "new_assignments": 1,
+      "preserved_work_units_after": 5.6,
+      "progress_preserved": true
+    },
+    {
+      "phase": "60-75_traces",
+      "sim_time": 44,
+      "agent_trace_count": 2,
+      "sample_receivers": [
+        "navigation_agent",
+        "safety_agent"
+      ]
+    },
+    {
+      "phase": "75-90_metrics",
+      "sim_time": 64,
+      "jobs_completed": 9,
+      "fleet_utilization_pct": 36.708860759493675,
+      "fuel_consumed": 70.22499999999997,
+      "missed_deadlines": 0
+    }
+  ],
+  "chaos_block": {
+    "ok": true,
+    "error": null,
+    "obstacles": 1
+  },
+  "agent_traces_sample": [
+    {
+      "correlation_id": "dbef59e0-f2be-46ee-b094-de898d82d23a",
+      "decision_id": "9",
+      "sender": "fleet_agent",
+      "receiver": "navigation_agent",
+      "request_type": "RouteRequest",
+      "response_type": "RouteResponse",
+      "start_wall_time": 1794775572.1543932,
+      "end_wall_time": 1794775572.154422,
+      "duration_ms": 0.028374954126775265,
+      "status": "ok",
+      "simulation_timestamp": 37,
+      "transport": "in_process",
+      "detail": {
+        "request": {
+          "tractor_id": "tractor_02",
+          "job_id": "job_06",
+          "start": {
+            "x": 2,
+            "y": 2
+          },
+          "goal": {
+            "x": 10,
+            "y": 2
+          },
+          "grid": {
+            "width": 20,
+            "height": 20
+          },
+          "obstacles": [],
+          "travel_speed": 2.0
+        },
+        "response": {
+          "reachable": true,
+          "path": [
+            {
+              "x": 2,
+              "y": 2
+            },
+            {
+              "x": 3,
+              "y": 2
+            },
+            {
+              "x": 4,
+              "y": 2
+            },
+            {
+              "x": 5,
+              "y": 2
+            },
+            {
+              "x": 6,
+              "y": 2
+            },
+            {
+              "x": 7,
+              "y": 2
+            },
+            {
+              "x": 8,
+              "y": 2
+            },
+            {
+              "x": 9,
+              "y": 2
+            },
+            {
+              "x": 10,
+              "y": 2
+            }
+          ],
+          "travel_cells": 8,
+          "travel_time": 4.0,
+          "reason": null
+        }
+      }
+    },
+    {
+      "correlation_id": "dbef59e0-f2be-46ee-b094-de898d82d23a",
+      "decision_id": "9",
+      "sender": "fleet_agent",
+      "receiver": "safety_agent",
+      "request_type": "SafetyValidationRequest",
+      "response_type": "SafetyValidationResponse",
+      "start_wall_time": 1794775572.156482,
+      "end_wall_time": 1794775572.1565251,
+      "duration_ms": 0.04345795605331659,
+      "status": "ok",
+      "simulation_timestamp": 37,
+      "transport": "in_process",
+      "detail": {
+        "request": {
+          "proposal": {
+            "tractor_id": "tractor_02",
+            "job_id": "job_06",
+            "completed_work_units": 0.0,
+            "estimated_work_units": 4.0,
+            "predicted_finish": 44.333333333333336,
+            "deadline_minute": 160,
+            "estimated_fuel_used": 9.6,
+            "route": {
+              "reachable": true,
+              "path": [
+                {
+                  "x": 2,
+                  "y": 2
+                },
+                {
+                  "x": 3,
+                  "y": 2
+                },
+                {
+                  "x": 4,
+                  "y": 2
+                },
+                {
+                  "x": 5,
+                  "y": 2
+                },
+                {
+                  "x": 6,
+                  "y": 2
+                },
+                {
+                  "x": 7,
+                  "y": 2
+                },
+                {
+                  "x": 8,
+                  "y": 2
+                },
+                {
+                  "x": 9,
+                  "y": 2
+                },
+                {
+                  "x": 10,
+                  "y": 2
+                }
+              ],
+              "travel_cells": 8,
+              "travel_time": 4.0,
+              "reason": null
+            },
+            "expected_completed_work_units": 0.0
+          },
+          "state": {
+            "scenario_name": "hackathon_demo_v1",
+            "seed": 42,
+            "sim_time": 37,
+            "playing": false,
+            "grid": {
+              "width": 20,
+              "height": 20
+            },
+            "fields": [
+              {
+                "id": "field_01",
+                "name": "North Orchard",
+                "position": {
+                  "x": 2,
+                  "y": 2
+                },
+                "job_ids": [
+                  "job_01",
+                  "job_02"
+                ]
+              },
+              {
+                "id": "field_02",
+                "name": "East Meadow",
+                "position": {
+                  "x": 2,
+                  "y": 10
+                },
+                "job_ids": [
+                  "job_03"
+                ]
+              },
+              {
+                "id": "field_03",
+                "name": "River Bend",
+                "position": {
+                  "x": 2,
+                  "y": 17
+                },
+                "job_ids": [
+                  "job_04"
+                ]
+              },
+              {
+                "id": "field_04",
+                "name": "Center Plot",
+                "position": {
+                  "x": 10,
+                  "y": 2
+                },
+                "job_ids": [
+                  "job_05",
+                  "job_06"
+                ]
+              },
+              {
+                "id": "field_05",
+                "name": "Homestead Flat",
+                "position": {
+                  "x": 10,
+                  "y": 10
+                },
+                "job_ids": [
+                  "job_07"
+                ]
+              },
+              {
+                "id": "field_06",
+                "name": "South Ridge",
+                "position": {
+                  "x": 10,
+                  "y": 17
+                },
+                "job_ids": [
+                  "job_08"
+                ]
+              },
+              {
+                "id": "field_07",
+                "name": "West Pasture",
+                "position": {
+                  "x": 17,
+                  "y": 2
+                },
+                "job_ids": [
+                  "job_09"
+                ]
+              },
+              {
+                "id": "field_08",
+                "name": "Corner Acre",
+                "position": {
+                  "x": 17,
+                  "y": 10
+                },
+                "job_ids": [
+                  "job_10"
+                ]
+              }
+            ],
+            "tractors": [
+              {
+                "id": "tractor_01",
+                "name": "Shield-Alpha",
+                "implement_type": "spraying",
+                "fuel_level": 78.44999999999999,
+                "fuel_capacity": 100.0,
+                "working_speed": 1.0,
+                "travel_speed": 2.0,
+                "position": {
+                  "x": 13,
+                  "y": 2
+                },
+                "status": "traveling",
+                "assigned_job_id": "job_07",
+                "path": [
+                  {
+                    "x": 17,
+                    "y": 2
+                  },
+                  {
+                    "x": 16,
+                    "y": 2
+                  },
+                  {
+                    "x": 15,
+                    "y": 2
+                  },
+                  {
+                    "x": 14,
+                    "y": 2
+                  },
+                  {
+                    "x": 13,
+                    "y": 2
+                  },
+                  {
+                    "x": 12,
+                    "y": 2
+                  },
+                  {
+                    "x": 11,
+                    "y": 2
+                  },
+                  {
+                    "x": 10,
+                    "y": 2
+                  },
+                  {
+                    "x": 10,
+                    "y": 3
+                  },
+                  {
+                    "x": 10,
+                    "y": 4
+                  },
+                  {
+                    "x": 10,
+                    "y": 5
+                  },
+                  {
+                    "x": 10,
+                    "y": 6
+                  },
+                  {
+                    "x": 10,
+                    "y": 7
+                  },
+                  {
+                    "x": 10,
+                    "y": 8
+                  },
+                  {
+                    "x": 10,
+                    "y": 9
+                  },
+                  {
+                    "x": 10,
+                    "y": 10
+                  }
+                ],
+                "path_index": 4,
+                "travel_cell_progress": 0.0
+              },
+              {
+                "id": "tractor_02",
+                "name": "Shield-Bravo",
+                "implement_type": "mowing",
+                "fuel_level": 66.3749999999997,
+                "fuel_capacity": 100.0,
+                "working_speed": 1.2,
+                "travel_speed": 2.0,
+                "position": {
+                  "x": 2,
+                  "y": 2
+                },
+                "status": "idle",
+                "assigned_job_id": null,
+                "path": [],
+                "path_index": 0,
+                "travel_cell_progress": 0.0
+              },
+              {
+                "id": "tractor_03",
+                "name": "Shield-Charlie",
+                "implement_type": "spraying",
+                "fuel_level": 73.68999999999988,
+                "fuel_capacity": 100.0,
+                "working_speed": 0.8,
+                "travel_speed": 1.5,
+                "position": {
+                  "x": 10,
+                  "y": 10
+                },
+                "status": "broken",
+                "assigned_job_id": null,
+                "path": [],
+                "path_index": 0,
+                "travel_cell_progress": 0.0
+              }
+            ],
+            "jobs": [
+              {
+                "id": "job_01",
+                "field_id": "field_01",
+                "job_type": "spraying",
+                "priority": 1,
+                "deadline_minute": 120,
+                "estimated_work_units": 8.0,
+                "completed_work_units": 8.0,
+                "status": "completed",
+                "assigned_tractor_id": null,
+                "sequence": 1,
+                "depends_on_job_id": null
+              },
+              {
+                "id": "job_02",
+                "field_id": "field_01",
+                "job_type": "mowing",
+                "priority": 2,
+                "deadline_minute": 180,
+                "estimated_work_units": 6.0,
+                "completed_work_units": 6.0,
+                "status": "completed",
+                "assigned_tractor_id": null,
+                "sequence": 2,
+                "depends_on_job_id": "job_01"
+              },
+              {
+                "id": "job_03",
+                "field_id": "field_02",
+                "job_type": "spraying",
+                "priority": 2,
+                "deadline_minute": 150,
+                "estimated_work_units": 5.0,
+                "completed_work_units": 5.0,
+                "status": "completed",
+                "assigned_tractor_id": null,
+                "sequence": 1,
+                "depends_on_job_id": null
+              },
+              {
+                "id": "job_04",
+                "field_id": "field_03",
+                "job_type": "mowing",
+                "priority": 3,
+                "deadline_minute": 200,
+                "estimated_work_units": 7.0,
+                "completed_work_units": 0.0,
+                "status": "pending",
+                "assigned_tractor_id": null,
+                "sequence": 1,
+                "depends_on_job_id": null
+              },
+              {
+                "id": "job_05",
+                "field_id": "field_04",
+                "job_type": "spraying",
+                "priority": 1,
+                "deadline_minute": 100,
+                "estimated_work_units": 9.0,
+                "completed_work_units": 9.0,
+                "status": "completed",
+                "assigned_tractor_id": null,
+                "sequence": 1,
+                "depends_on_job_id": null
+              },
+              {
+                "id": "job_06",
+                "field_id": "field_04",
+                "job_type": "mowing",
+                "priority": 2,
+                "deadline_minute": 160,
+                "estimated_work_units": 4.0,
+                "completed_work_units": 0.0,
+                "status": "pending",
+                "assigned_tractor_id": null,
+                "sequence": 2,
+                "depends_on_job_id": "job_05"
+              },
+              {
+                "id": "job_07",
+                "field_id": "field_05",
+                "job_type": "spraying",
+                "priority": 3,
+                "deadline_minute": 220,
+                "estimated_work_units": 6.0,
+                "completed_work_units": 5.6,
+                "status": "assigned",
+                "assigned_tractor_id": "tractor_01",
+                "sequence": 1,
+                "depends_on_job_id": null
+              },
+              {
+                "id": "job_08",
+                "field_id": "field_06",
+                "job_type": "mowing",
+                "priority": 2,
+                "deadline_minute": 170,
+                "estimated_work_units": 5.5,
+                "completed_work_units": 5.5,
+                "status": "completed",
+                "assigned_tractor_id": null,
+                "sequence": 1,
+                "depends_on_job_id": null
+              },
+              {
+                "id": "job_09",
+                "field_id": "field_07",
+                "job_type": "spraying",
+                "priority": 4,
+                "deadline_minute": 240,
+                "estimated_work_units": 4.0,
+                "completed_work_units": 4.0,
+                "status": "completed",
+                "assigned_tractor_id": null,
+                "sequence": 1,
+                "depends_on_job_id": null
+              },
+              {
+                "id": "job_10",
+                "field_id": "field_08",
+                "job_type": "mowing",
+                "priority": 3,
+                "deadline_minute": 210,
+                "estimated_work_units": 8.0,
+                "completed_work_units": 0.0,
+                "status": "pending",
+                "assigned_tractor_id": null,
+                "sequence": 1,
+                "depends_on_job_id": null
+              }
+            ],
+            "obstacles": [],
+            "fuel": {
+              "travel_per_cell": 0.4,
+              "work_per_unit": 0.35,
+              "safety_reserve": 5.0
+            },
+            "depot": {
+              "x": 0,
+              "y": 0
+            },
+            "event_count": 62,
+            "tick_count": 37
+          },
+          "reserved_tractor_ids": [],
+          "reserved_job_ids": []
+        },
+        "response": {
+          "approved": true,
+          "violations": [],
+          "warnings": [],
+          "unavoidable_lateness": false,
+          "deadline_margin": 115.66666666666666
+        }
+      }
+    }
+  ],
+  "event_count": 84,
+  "events": [
+    {
+      "id": 1,
+      "sim_time": 0,
+      "event_type": "simulation_reset",
+      "message": "Scenario 'hackathon_demo_v1' loaded (seed=42)",
+      "tractor_id": null,
+      "job_id": null,
+      "field_id": null,
+      "data": {
+        "seed": 42,
+        "scenario": "hackathon_demo_v1",
+        "run_id": null,
+        "isolated": true
+      }
+    },
+    {
+      "id": 2,
+      "sim_time": 0,
+      "event_type": "assignment",
+      "message": "Assigned job_01 to tractor_01: farmshield:match score=190.225 priority=1 travel=2.00m work=8.00m finish=10.00 margin=110.00 fuel=9.40 | validated corr=9cc618d3 trigger=demo_schedule",
+      "tractor_id": "tractor_01",
+      "job_id": "job_01",
+      "field_id": "field_01",
+      "data": {
+        "reason": "farmshield:match score=190.225 priority=1 travel=2.00m work=8.00m finish=10.00 margin=110.00 fuel=9.40 | validated corr=9cc618d3 trigger=demo_schedule"
+      }
+    },
+    {
+      "id": 3,
+      "sim_time": 0,
+      "event_type": "assignment",
+      "message": "Assigned job_08 to tractor_02: farmshield:match score=95.163 priority=2 travel=13.00m work=4.58m finish=17.58 margin=152.42 fuel=17.32 | validated corr=9cc618d3 trigger=demo_schedule",
+      "tractor_id": "tractor_02",
+      "job_id": "job_08",
+      "field_id": "field_06",
+      "data": {
+        "reason": "farmshield:match score=95.163 priority=2 travel=13.00m work=4.58m finish=17.58 margin=152.42 fuel=17.32 | validated corr=9cc618d3 trigger=demo_schedule"
+      }
+    },
+    {
+      "id": 4,
+      "sim_time": 0,
+      "event_type": "assignment",
+      "message": "Assigned job_03 to tractor_03: farmshield:match score=123.515 priority=2 travel=7.33m work=6.25m finish=13.58 margin=136.42 fuel=11.15 | validated corr=9cc618d3 trigger=demo_schedule",
+      "tractor_id": "tractor_03",
+      "job_id": "job_03",
+      "field_id": "field_02",
+      "data": {
+        "reason": "farmshield:match score=123.515 priority=2 travel=7.33m work=6.25m finish=13.58 margin=136.42 fuel=11.15 | validated corr=9cc618d3 trigger=demo_schedule"
+      }
+    },
+    {
+      "id": 5,
+      "sim_time": 1,
+      "event_type": "travel_start",
+      "message": "tractor_01 traveling to job_01 (4 cells)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_01",
+      "field_id": "field_01",
+      "data": {
+        "distance": 4,
+        "path_cells": 5
+      }
+    },
+    {
+      "id": 6,
+      "sim_time": 1,
+      "event_type": "travel_start",
+      "message": "tractor_02 traveling to job_08 (26 cells)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_08",
+      "field_id": "field_06",
+      "data": {
+        "distance": 26,
+        "path_cells": 27
+      }
+    },
+    {
+      "id": 7,
+      "sim_time": 1,
+      "event_type": "travel_start",
+      "message": "tractor_03 traveling to job_03 (11 cells)",
+      "tractor_id": "tractor_03",
+      "job_id": "job_03",
+      "field_id": "field_02",
+      "data": {
+        "distance": 11,
+        "path_cells": 12
+      }
+    },
+    {
+      "id": 8,
+      "sim_time": 3,
+      "event_type": "arrival",
+      "message": "tractor_01 arrived at field_01 for job_01",
+      "tractor_id": "tractor_01",
+      "job_id": "job_01",
+      "field_id": "field_01",
+      "data": {
+        "position": {
+          "x": 2,
+          "y": 2
+        }
+      }
+    },
+    {
+      "id": 9,
+      "sim_time": 3,
+      "event_type": "job_start",
+      "message": "tractor_01 started job_01 (completed=0.0)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_01",
+      "field_id": "field_01",
+      "data": {
+        "completed_work_units": 0.0
+      }
+    },
+    {
+      "id": 10,
+      "sim_time": 5,
+      "event_type": "progress_milestone",
+      "message": "job_01 reached 25% (2.000 units)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_01",
+      "field_id": "field_01",
+      "data": {
+        "fraction": 0.25,
+        "completed_work_units": 2.0,
+        "estimated_work_units": 8.0
+      }
+    },
+    {
+      "id": 11,
+      "sim_time": 7,
+      "event_type": "progress_milestone",
+      "message": "job_01 reached 50% (4.000 units)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_01",
+      "field_id": "field_01",
+      "data": {
+        "fraction": 0.5,
+        "completed_work_units": 4.0,
+        "estimated_work_units": 8.0
+      }
+    },
+    {
+      "id": 12,
+      "sim_time": 9,
+      "event_type": "progress_milestone",
+      "message": "job_01 reached 75% (6.000 units)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_01",
+      "field_id": "field_01",
+      "data": {
+        "fraction": 0.75,
+        "completed_work_units": 6.0,
+        "estimated_work_units": 8.0
+      }
+    },
+    {
+      "id": 13,
+      "sim_time": 9,
+      "event_type": "arrival",
+      "message": "tractor_03 arrived at field_02 for job_03",
+      "tractor_id": "tractor_03",
+      "job_id": "job_03",
+      "field_id": "field_02",
+      "data": {
+        "position": {
+          "x": 2,
+          "y": 10
+        }
+      }
+    },
+    {
+      "id": 14,
+      "sim_time": 9,
+      "event_type": "job_start",
+      "message": "tractor_03 started job_03 (completed=0.0)",
+      "tractor_id": "tractor_03",
+      "job_id": "job_03",
+      "field_id": "field_02",
+      "data": {
+        "completed_work_units": 0.0
+      }
+    },
+    {
+      "id": 15,
+      "sim_time": 11,
+      "event_type": "completion",
+      "message": "Completed job_01 by tractor_01",
+      "tractor_id": "tractor_01",
+      "job_id": "job_01",
+      "field_id": "field_01",
+      "data": {
+        "completed_work_units": 8.0,
+        "deadline_minute": 120,
+        "on_time": true
+      }
+    },
+    {
+      "id": 16,
+      "sim_time": 11,
+      "event_type": "progress_milestone",
+      "message": "job_03 reached 25% (1.600 units)",
+      "tractor_id": "tractor_03",
+      "job_id": "job_03",
+      "field_id": "field_02",
+      "data": {
+        "fraction": 0.25,
+        "completed_work_units": 1.6,
+        "estimated_work_units": 5.0
+      }
+    },
+    {
+      "id": 17,
+      "sim_time": 11,
+      "event_type": "job_unblocked",
+      "message": "job_02 unblocked after job_01 completed",
+      "tractor_id": null,
+      "job_id": "job_02",
+      "field_id": "field_01",
+      "data": {
+        "depends_on_job_id": "job_01"
+      }
+    },
+    {
+      "id": 18,
+      "sim_time": 11,
+      "event_type": "assignment",
+      "message": "Assigned job_05 to tractor_01: farmshield:match score=180.325 priority=1 travel=4.00m work=9.00m finish=24.00 margin=76.00 fuel=11.35 | validated corr=8013bf5d trigger=demo",
+      "tractor_id": "tractor_01",
+      "job_id": "job_05",
+      "field_id": "field_04",
+      "data": {
+        "reason": "farmshield:match score=180.325 priority=1 travel=4.00m work=9.00m finish=24.00 margin=76.00 fuel=11.35 | validated corr=8013bf5d trigger=demo"
+      }
+    },
+    {
+      "id": 19,
+      "sim_time": 12,
+      "event_type": "travel_start",
+      "message": "tractor_01 traveling to job_05 (8 cells)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_05",
+      "field_id": "field_04",
+      "data": {
+        "distance": 8,
+        "path_cells": 9
+      }
+    },
+    {
+      "id": 20,
+      "sim_time": 13,
+      "event_type": "progress_milestone",
+      "message": "job_03 reached 50% (3.200 units)",
+      "tractor_id": "tractor_03",
+      "job_id": "job_03",
+      "field_id": "field_02",
+      "data": {
+        "fraction": 0.5,
+        "completed_work_units": 3.2,
+        "estimated_work_units": 5.0
+      }
+    },
+    {
+      "id": 21,
+      "sim_time": 14,
+      "event_type": "arrival",
+      "message": "tractor_02 arrived at field_06 for job_08",
+      "tractor_id": "tractor_02",
+      "job_id": "job_08",
+      "field_id": "field_06",
+      "data": {
+        "position": {
+          "x": 10,
+          "y": 17
+        }
+      }
+    },
+    {
+      "id": 22,
+      "sim_time": 14,
+      "event_type": "job_start",
+      "message": "tractor_02 started job_08 (completed=0.0)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_08",
+      "field_id": "field_06",
+      "data": {
+        "completed_work_units": 0.0
+      }
+    },
+    {
+      "id": 23,
+      "sim_time": 14,
+      "event_type": "progress_milestone",
+      "message": "job_03 reached 75% (4.000 units)",
+      "tractor_id": "tractor_03",
+      "job_id": "job_03",
+      "field_id": "field_02",
+      "data": {
+        "fraction": 0.75,
+        "completed_work_units": 4.0,
+        "estimated_work_units": 5.0
+      }
+    },
+    {
+      "id": 24,
+      "sim_time": 16,
+      "event_type": "arrival",
+      "message": "tractor_01 arrived at field_04 for job_05",
+      "tractor_id": "tractor_01",
+      "job_id": "job_05",
+      "field_id": "field_04",
+      "data": {
+        "position": {
+          "x": 10,
+          "y": 2
+        }
+      }
+    },
+    {
+      "id": 25,
+      "sim_time": 16,
+      "event_type": "job_start",
+      "message": "tractor_01 started job_05 (completed=0.0)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_05",
+      "field_id": "field_04",
+      "data": {
+        "completed_work_units": 0.0
+      }
+    },
+    {
+      "id": 26,
+      "sim_time": 16,
+      "event_type": "progress_milestone",
+      "message": "job_08 reached 25% (2.400 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_08",
+      "field_id": "field_06",
+      "data": {
+        "fraction": 0.25,
+        "completed_work_units": 2.4,
+        "estimated_work_units": 5.5
+      }
+    },
+    {
+      "id": 27,
+      "sim_time": 16,
+      "event_type": "completion",
+      "message": "Completed job_03 by tractor_03",
+      "tractor_id": "tractor_03",
+      "job_id": "job_03",
+      "field_id": "field_02",
+      "data": {
+        "completed_work_units": 5.0,
+        "deadline_minute": 150,
+        "on_time": true
+      }
+    },
+    {
+      "id": 28,
+      "sim_time": 16,
+      "event_type": "assignment",
+      "message": "Assigned job_07 to tractor_03: farmshield:match score=93.463 priority=3 travel=5.33m work=7.50m finish=28.83 margin=191.17 fuel=10.30 | validated corr=ec173fb2 trigger=demo",
+      "tractor_id": "tractor_03",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "reason": "farmshield:match score=93.463 priority=3 travel=5.33m work=7.50m finish=28.83 margin=191.17 fuel=10.30 | validated corr=ec173fb2 trigger=demo"
+      }
+    },
+    {
+      "id": 29,
+      "sim_time": 17,
+      "event_type": "progress_milestone",
+      "message": "job_08 reached 50% (3.600 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_08",
+      "field_id": "field_06",
+      "data": {
+        "fraction": 0.5,
+        "completed_work_units": 3.5999999999999996,
+        "estimated_work_units": 5.5
+      }
+    },
+    {
+      "id": 30,
+      "sim_time": 17,
+      "event_type": "travel_start",
+      "message": "tractor_03 traveling to job_07 (8 cells)",
+      "tractor_id": "tractor_03",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "distance": 8,
+        "path_cells": 9
+      }
+    },
+    {
+      "id": 31,
+      "sim_time": 18,
+      "event_type": "progress_milestone",
+      "message": "job_08 reached 75% (4.800 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_08",
+      "field_id": "field_06",
+      "data": {
+        "fraction": 0.75,
+        "completed_work_units": 4.8,
+        "estimated_work_units": 5.5
+      }
+    },
+    {
+      "id": 32,
+      "sim_time": 19,
+      "event_type": "progress_milestone",
+      "message": "job_05 reached 25% (3.000 units)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_05",
+      "field_id": "field_04",
+      "data": {
+        "fraction": 0.25,
+        "completed_work_units": 3.0,
+        "estimated_work_units": 9.0
+      }
+    },
+    {
+      "id": 33,
+      "sim_time": 19,
+      "event_type": "completion",
+      "message": "Completed job_08 by tractor_02",
+      "tractor_id": "tractor_02",
+      "job_id": "job_08",
+      "field_id": "field_06",
+      "data": {
+        "completed_work_units": 5.5,
+        "deadline_minute": 170,
+        "on_time": true
+      }
+    },
+    {
+      "id": 34,
+      "sim_time": 19,
+      "event_type": "assignment",
+      "message": "Assigned job_02 to tractor_02: farmshield:match score=102.672 priority=2 travel=11.50m work=5.00m finish=35.50 margin=144.50 fuel=16.30 | validated corr=ea0c7731 trigger=demo",
+      "tractor_id": "tractor_02",
+      "job_id": "job_02",
+      "field_id": "field_01",
+      "data": {
+        "reason": "farmshield:match score=102.672 priority=2 travel=11.50m work=5.00m finish=35.50 margin=144.50 fuel=16.30 | validated corr=ea0c7731 trigger=demo"
+      }
+    },
+    {
+      "id": 35,
+      "sim_time": 20,
+      "event_type": "travel_start",
+      "message": "tractor_02 traveling to job_02 (23 cells)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_02",
+      "field_id": "field_01",
+      "data": {
+        "distance": 23,
+        "path_cells": 24
+      }
+    },
+    {
+      "id": 36,
+      "sim_time": 21,
+      "event_type": "progress_milestone",
+      "message": "job_05 reached 50% (5.000 units)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_05",
+      "field_id": "field_04",
+      "data": {
+        "fraction": 0.5,
+        "completed_work_units": 5.0,
+        "estimated_work_units": 9.0
+      }
+    },
+    {
+      "id": 37,
+      "sim_time": 23,
+      "event_type": "progress_milestone",
+      "message": "job_05 reached 75% (7.000 units)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_05",
+      "field_id": "field_04",
+      "data": {
+        "fraction": 0.75,
+        "completed_work_units": 7.0,
+        "estimated_work_units": 9.0
+      }
+    },
+    {
+      "id": 38,
+      "sim_time": 23,
+      "event_type": "arrival",
+      "message": "tractor_03 arrived at field_05 for job_07",
+      "tractor_id": "tractor_03",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "position": {
+          "x": 10,
+          "y": 10
+        }
+      }
+    },
+    {
+      "id": 39,
+      "sim_time": 23,
+      "event_type": "job_start",
+      "message": "tractor_03 started job_07 (completed=0.0)",
+      "tractor_id": "tractor_03",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "completed_work_units": 0.0
+      }
+    },
+    {
+      "id": 40,
+      "sim_time": 25,
+      "event_type": "completion",
+      "message": "Completed job_05 by tractor_01",
+      "tractor_id": "tractor_01",
+      "job_id": "job_05",
+      "field_id": "field_04",
+      "data": {
+        "completed_work_units": 9.0,
+        "deadline_minute": 100,
+        "on_time": true
+      }
+    },
+    {
+      "id": 41,
+      "sim_time": 25,
+      "event_type": "progress_milestone",
+      "message": "job_07 reached 25% (1.600 units)",
+      "tractor_id": "tractor_03",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "fraction": 0.25,
+        "completed_work_units": 1.6,
+        "estimated_work_units": 6.0
+      }
+    },
+    {
+      "id": 42,
+      "sim_time": 25,
+      "event_type": "job_unblocked",
+      "message": "job_06 unblocked after job_05 completed",
+      "tractor_id": null,
+      "job_id": "job_06",
+      "field_id": "field_04",
+      "data": {
+        "depends_on_job_id": "job_05"
+      }
+    },
+    {
+      "id": 43,
+      "sim_time": 25,
+      "event_type": "assignment",
+      "message": "Assigned job_09 to tractor_01: farmshield:match score=62.620 priority=4 travel=3.50m work=4.00m finish=32.50 margin=207.50 fuel=9.20 | validated corr=028043a2 trigger=demo",
+      "tractor_id": "tractor_01",
+      "job_id": "job_09",
+      "field_id": "field_07",
+      "data": {
+        "reason": "farmshield:match score=62.620 priority=4 travel=3.50m work=4.00m finish=32.50 margin=207.50 fuel=9.20 | validated corr=028043a2 trigger=demo"
+      }
+    },
+    {
+      "id": 44,
+      "sim_time": 26,
+      "event_type": "travel_start",
+      "message": "tractor_01 traveling to job_09 (7 cells)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_09",
+      "field_id": "field_07",
+      "data": {
+        "distance": 7,
+        "path_cells": 8
+      }
+    },
+    {
+      "id": 45,
+      "sim_time": 27,
+      "event_type": "progress_milestone",
+      "message": "job_07 reached 50% (3.200 units)",
+      "tractor_id": "tractor_03",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "fraction": 0.5,
+        "completed_work_units": 3.2,
+        "estimated_work_units": 6.0
+      }
+    },
+    {
+      "id": 46,
+      "sim_time": 29,
+      "event_type": "progress_milestone",
+      "message": "job_07 reached 75% (4.800 units)",
+      "tractor_id": "tractor_03",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "fraction": 0.75,
+        "completed_work_units": 4.8,
+        "estimated_work_units": 6.0
+      }
+    },
+    {
+      "id": 47,
+      "sim_time": 30,
+      "event_type": "arrival",
+      "message": "tractor_01 arrived at field_07 for job_09",
+      "tractor_id": "tractor_01",
+      "job_id": "job_09",
+      "field_id": "field_07",
+      "data": {
+        "position": {
+          "x": 17,
+          "y": 2
+        }
+      }
+    },
+    {
+      "id": 48,
+      "sim_time": 30,
+      "event_type": "job_start",
+      "message": "tractor_01 started job_09 (completed=0.0)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_09",
+      "field_id": "field_07",
+      "data": {
+        "completed_work_units": 0.0
+      }
+    },
+    {
+      "id": 49,
+      "sim_time": 30,
+      "event_type": "breakdown",
+      "message": "tractor_03 breakdown (demo_judge_failure) prior_status=working",
+      "tractor_id": "tractor_03",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "reason": "demo_judge_failure",
+        "prior_status": "working",
+        "completed_work_units": 5.6,
+        "percent_complete": 93.33333333333333
+      }
+    },
+    {
+      "id": 50,
+      "sim_time": 30,
+      "event_type": "reassignment",
+      "message": "job_07 released from tractor_03 after breakdown (progress=5.6)",
+      "tractor_id": "tractor_03",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "reason": "breakdown_release",
+        "completed_work_units": 5.6,
+        "percent_complete": 93.33333333333333
+      }
+    },
+    {
+      "id": 51,
+      "sim_time": 31,
+      "event_type": "progress_milestone",
+      "message": "job_09 reached 25% (1.000 units)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_09",
+      "field_id": "field_07",
+      "data": {
+        "fraction": 0.25,
+        "completed_work_units": 1.0,
+        "estimated_work_units": 4.0
+      }
+    },
+    {
+      "id": 52,
+      "sim_time": 32,
+      "event_type": "progress_milestone",
+      "message": "job_09 reached 50% (2.000 units)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_09",
+      "field_id": "field_07",
+      "data": {
+        "fraction": 0.5,
+        "completed_work_units": 2.0,
+        "estimated_work_units": 4.0
+      }
+    },
+    {
+      "id": 53,
+      "sim_time": 32,
+      "event_type": "arrival",
+      "message": "tractor_02 arrived at field_01 for job_02",
+      "tractor_id": "tractor_02",
+      "job_id": "job_02",
+      "field_id": "field_01",
+      "data": {
+        "position": {
+          "x": 2,
+          "y": 2
+        }
+      }
+    },
+    {
+      "id": 54,
+      "sim_time": 32,
+      "event_type": "job_start",
+      "message": "tractor_02 started job_02 (completed=0.0)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_02",
+      "field_id": "field_01",
+      "data": {
+        "completed_work_units": 0.0
+      }
+    },
+    {
+      "id": 55,
+      "sim_time": 33,
+      "event_type": "progress_milestone",
+      "message": "job_09 reached 75% (3.000 units)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_09",
+      "field_id": "field_07",
+      "data": {
+        "fraction": 0.75,
+        "completed_work_units": 3.0,
+        "estimated_work_units": 4.0
+      }
+    },
+    {
+      "id": 56,
+      "sim_time": 34,
+      "event_type": "completion",
+      "message": "Completed job_09 by tractor_01",
+      "tractor_id": "tractor_01",
+      "job_id": "job_09",
+      "field_id": "field_07",
+      "data": {
+        "completed_work_units": 4.0,
+        "deadline_minute": 240,
+        "on_time": true
+      }
+    },
+    {
+      "id": 57,
+      "sim_time": 34,
+      "event_type": "progress_milestone",
+      "message": "job_02 reached 25% (2.400 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_02",
+      "field_id": "field_01",
+      "data": {
+        "fraction": 0.25,
+        "completed_work_units": 2.4,
+        "estimated_work_units": 6.0
+      }
+    },
+    {
+      "id": 58,
+      "sim_time": 34,
+      "event_type": "assignment",
+      "message": "Assigned job_07 to tractor_01: farmshield:match score=82.640 priority=3 travel=7.50m work=0.40m finish=41.90 margin=178.10 fuel=11.14 | validated corr=f36be88d trigger=demo_recovery",
+      "tractor_id": "tractor_01",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "reason": "farmshield:match score=82.640 priority=3 travel=7.50m work=0.40m finish=41.90 margin=178.10 fuel=11.14 | validated corr=f36be88d trigger=demo_recovery"
+      }
+    },
+    {
+      "id": 59,
+      "sim_time": 35,
+      "event_type": "travel_start",
+      "message": "tractor_01 traveling to job_07 (15 cells)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "distance": 15,
+        "path_cells": 16
+      }
+    },
+    {
+      "id": 60,
+      "sim_time": 35,
+      "event_type": "progress_milestone",
+      "message": "job_02 reached 50% (3.600 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_02",
+      "field_id": "field_01",
+      "data": {
+        "fraction": 0.5,
+        "completed_work_units": 3.5999999999999996,
+        "estimated_work_units": 6.0
+      }
+    },
+    {
+      "id": 61,
+      "sim_time": 36,
+      "event_type": "progress_milestone",
+      "message": "job_02 reached 75% (4.800 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_02",
+      "field_id": "field_01",
+      "data": {
+        "fraction": 0.75,
+        "completed_work_units": 4.8,
+        "estimated_work_units": 6.0
+      }
+    },
+    {
+      "id": 62,
+      "sim_time": 37,
+      "event_type": "completion",
+      "message": "Completed job_02 by tractor_02",
+      "tractor_id": "tractor_02",
+      "job_id": "job_02",
+      "field_id": "field_01",
+      "data": {
+        "completed_work_units": 6.0,
+        "deadline_minute": 180,
+        "on_time": true
+      }
+    },
+    {
+      "id": 63,
+      "sim_time": 37,
+      "event_type": "assignment",
+      "message": "Assigned job_06 to tractor_02: farmshield:match score=140.214 priority=2 travel=4.00m work=3.33m finish=44.33 margin=115.67 fuel=9.60 | validated corr=dbef59e0 trigger=demo_trace",
+      "tractor_id": "tractor_02",
+      "job_id": "job_06",
+      "field_id": "field_04",
+      "data": {
+        "reason": "farmshield:match score=140.214 priority=2 travel=4.00m work=3.33m finish=44.33 margin=115.67 fuel=9.60 | validated corr=dbef59e0 trigger=demo_trace"
+      }
+    },
+    {
+      "id": 64,
+      "sim_time": 38,
+      "event_type": "travel_start",
+      "message": "tractor_02 traveling to job_06 (8 cells)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_06",
+      "field_id": "field_04",
+      "data": {
+        "distance": 8,
+        "path_cells": 9
+      }
+    },
+    {
+      "id": 65,
+      "sim_time": 42,
+      "event_type": "arrival",
+      "message": "tractor_02 arrived at field_04 for job_06",
+      "tractor_id": "tractor_02",
+      "job_id": "job_06",
+      "field_id": "field_04",
+      "data": {
+        "position": {
+          "x": 10,
+          "y": 2
+        }
+      }
+    },
+    {
+      "id": 66,
+      "sim_time": 42,
+      "event_type": "job_start",
+      "message": "tractor_02 started job_06 (completed=0.0)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_06",
+      "field_id": "field_04",
+      "data": {
+        "completed_work_units": 0.0
+      }
+    },
+    {
+      "id": 67,
+      "sim_time": 43,
+      "event_type": "arrival",
+      "message": "tractor_01 arrived at field_05 for job_07",
+      "tractor_id": "tractor_01",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "position": {
+          "x": 10,
+          "y": 10
+        }
+      }
+    },
+    {
+      "id": 68,
+      "sim_time": 43,
+      "event_type": "job_start",
+      "message": "tractor_01 started job_07 (completed=5.6)",
+      "tractor_id": "tractor_01",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "completed_work_units": 5.6
+      }
+    },
+    {
+      "id": 69,
+      "sim_time": 43,
+      "event_type": "progress_milestone",
+      "message": "job_06 reached 25% (1.200 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_06",
+      "field_id": "field_04",
+      "data": {
+        "fraction": 0.25,
+        "completed_work_units": 1.2,
+        "estimated_work_units": 4.0
+      }
+    },
+    {
+      "id": 70,
+      "sim_time": 44,
+      "event_type": "completion",
+      "message": "Completed job_07 by tractor_01",
+      "tractor_id": "tractor_01",
+      "job_id": "job_07",
+      "field_id": "field_05",
+      "data": {
+        "completed_work_units": 6.0,
+        "deadline_minute": 220,
+        "on_time": true
+      }
+    },
+    {
+      "id": 71,
+      "sim_time": 44,
+      "event_type": "progress_milestone",
+      "message": "job_06 reached 50% (2.400 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_06",
+      "field_id": "field_04",
+      "data": {
+        "fraction": 0.5,
+        "completed_work_units": 2.4,
+        "estimated_work_units": 4.0
+      }
+    },
+    {
+      "id": 72,
+      "sim_time": 45,
+      "event_type": "progress_milestone",
+      "message": "job_06 reached 75% (3.600 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_06",
+      "field_id": "field_04",
+      "data": {
+        "fraction": 0.75,
+        "completed_work_units": 3.5999999999999996,
+        "estimated_work_units": 4.0
+      }
+    },
+    {
+      "id": 73,
+      "sim_time": 46,
+      "event_type": "completion",
+      "message": "Completed job_06 by tractor_02",
+      "tractor_id": "tractor_02",
+      "job_id": "job_06",
+      "field_id": "field_04",
+      "data": {
+        "completed_work_units": 4.0,
+        "deadline_minute": 160,
+        "on_time": true
+      }
+    },
+    {
+      "id": 74,
+      "sim_time": 46,
+      "event_type": "assignment",
+      "message": "Assigned job_10 to tractor_02: farmshield:match score=82.666 priority=3 travel=7.50m work=6.67m finish=60.17 margin=149.83 fuel=13.80 | validated corr=6040e77e trigger=demo",
+      "tractor_id": "tractor_02",
+      "job_id": "job_10",
+      "field_id": "field_08",
+      "data": {
+        "reason": "farmshield:match score=82.666 priority=3 travel=7.50m work=6.67m finish=60.17 margin=149.83 fuel=13.80 | validated corr=6040e77e trigger=demo"
+      }
+    },
+    {
+      "id": 75,
+      "sim_time": 47,
+      "event_type": "travel_start",
+      "message": "tractor_02 traveling to job_10 (15 cells)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_10",
+      "field_id": "field_08",
+      "data": {
+        "distance": 15,
+        "path_cells": 16
+      }
+    },
+    {
+      "id": 76,
+      "sim_time": 55,
+      "event_type": "arrival",
+      "message": "tractor_02 arrived at field_08 for job_10",
+      "tractor_id": "tractor_02",
+      "job_id": "job_10",
+      "field_id": "field_08",
+      "data": {
+        "position": {
+          "x": 17,
+          "y": 10
+        }
+      }
+    },
+    {
+      "id": 77,
+      "sim_time": 55,
+      "event_type": "job_start",
+      "message": "tractor_02 started job_10 (completed=0.0)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_10",
+      "field_id": "field_08",
+      "data": {
+        "completed_work_units": 0.0
+      }
+    },
+    {
+      "id": 78,
+      "sim_time": 57,
+      "event_type": "progress_milestone",
+      "message": "job_10 reached 25% (2.400 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_10",
+      "field_id": "field_08",
+      "data": {
+        "fraction": 0.25,
+        "completed_work_units": 2.4,
+        "estimated_work_units": 8.0
+      }
+    },
+    {
+      "id": 79,
+      "sim_time": 59,
+      "event_type": "progress_milestone",
+      "message": "job_10 reached 50% (4.800 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_10",
+      "field_id": "field_08",
+      "data": {
+        "fraction": 0.5,
+        "completed_work_units": 4.8,
+        "estimated_work_units": 8.0
+      }
+    },
+    {
+      "id": 80,
+      "sim_time": 60,
+      "event_type": "progress_milestone",
+      "message": "job_10 reached 75% (6.000 units)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_10",
+      "field_id": "field_08",
+      "data": {
+        "fraction": 0.75,
+        "completed_work_units": 6.0,
+        "estimated_work_units": 8.0
+      }
+    },
+    {
+      "id": 81,
+      "sim_time": 62,
+      "event_type": "completion",
+      "message": "Completed job_10 by tractor_02",
+      "tractor_id": "tractor_02",
+      "job_id": "job_10",
+      "field_id": "field_08",
+      "data": {
+        "completed_work_units": 8.0,
+        "deadline_minute": 210,
+        "on_time": true
+      }
+    },
+    {
+      "id": 82,
+      "sim_time": 62,
+      "event_type": "assignment",
+      "message": "Assigned job_04 to tractor_02: farmshield:match score=65.205 priority=3 travel=11.00m work=5.83m finish=78.83 margin=121.17 fuel=16.25 | validated corr=d539b9b5 trigger=demo",
+      "tractor_id": "tractor_02",
+      "job_id": "job_04",
+      "field_id": "field_03",
+      "data": {
+        "reason": "farmshield:match score=65.205 priority=3 travel=11.00m work=5.83m finish=78.83 margin=121.17 fuel=16.25 | validated corr=d539b9b5 trigger=demo"
+      }
+    },
+    {
+      "id": 83,
+      "sim_time": 63,
+      "event_type": "travel_start",
+      "message": "tractor_02 traveling to job_04 (22 cells)",
+      "tractor_id": "tractor_02",
+      "job_id": "job_04",
+      "field_id": "field_03",
+      "data": {
+        "distance": 22,
+        "path_cells": 23
+      }
+    },
+    {
+      "id": 84,
+      "sim_time": 64,
+      "event_type": "route_blocked",
+      "message": "Blocked cell (7,7): demo_chaos_block",
+      "tractor_id": null,
+      "job_id": null,
+      "field_id": null,
+      "data": {
+        "x": 7,
+        "y": 7,
+        "reason": "demo_chaos_block"
+      }
+    }
+  ],
+  "note": "All events were emitted by the live simulator \u2014 not fabricated."
+}

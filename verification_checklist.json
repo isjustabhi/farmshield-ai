@@ -1,0 +1,127 @@
+{
+  "generated_at": "2026-11-15T20:45:45.848716+00:00",
+  "checks": [
+    {
+      "id": 1,
+      "name": "Backend starts",
+      "ok": true,
+      "detail": "GET /api/health \u2192 200 ok"
+    },
+    {
+      "id": 2,
+      "name": "Frontend starts",
+      "ok": true,
+      "detail": "GET http://127.0.0.1:5173 \u2192 200"
+    },
+    {
+      "id": 3,
+      "name": "Frontend production build",
+      "ok": true,
+      "detail": "npm run build succeeded (tsc -b && vite build)"
+    },
+    {
+      "id": 4,
+      "name": "Scenario loads",
+      "ok": true,
+      "detail": "scenario=hackathon_demo_v1 seed=42"
+    },
+    {
+      "id": 5,
+      "name": "Simulation advances",
+      "ok": true,
+      "detail": "sim_time=75"
+    },
+    {
+      "id": 6,
+      "name": "Scheduler assigns compatible tractors",
+      "ok": true,
+      "detail": "[{'job_id': 'job_01', 'tractor_id': 'tractor_01'}, {'job_id': 'job_03', 'tractor_id': 'tractor_03'}, {'job_id': 'job_08', 'tractor_id': 'tractor_02'}]"
+    },
+    {
+      "id": 7,
+      "name": "Safety constraints enforced",
+      "ok": true,
+      "detail": "violations=['job_not_assignable:blocked', 'incompatible_equipment:spraying!=mowing']"
+    },
+    {
+      "id": 8,
+      "name": "Fuel constraints enforced",
+      "ok": true,
+      "detail": "insufficient_fuel:have=0.000,need=9.400"
+    },
+    {
+      "id": 9,
+      "name": "Jobs progress and complete",
+      "ok": true,
+      "detail": "progress=33.1"
+    },
+    {
+      "id": 10,
+      "name": "Breakdown recovery works",
+      "ok": true,
+      "detail": "released=job_07"
+    },
+    {
+      "id": 11,
+      "name": "Completed work preserved",
+      "ok": true,
+      "detail": "preserved=5.6"
+    },
+    {
+      "id": 12,
+      "name": "No conflicting assignments",
+      "ok": true,
+      "detail": "{'tractor_01': ['job_01'], 'tractor_03': ['job_03'], 'tractor_02': ['job_08']}"
+    },
+    {
+      "id": 13,
+      "name": "Agent communication logged",
+      "ok": true,
+      "detail": "traces=2"
+    },
+    {
+      "id": 14,
+      "name": "Operational memory persists",
+      "ok": true,
+      "detail": "run_id=77d2531a-2c35-46b6-8057-68d4e8f96f4d"
+    },
+    {
+      "id": 15,
+      "name": "Chaos Lab changes state",
+      "ok": true,
+      "detail": "{'ok': True, 'error': None, 'obstacles': 1}"
+    },
+    {
+      "id": 16,
+      "name": "Productivity calculations valid",
+      "ok": true,
+      "detail": "util=33.33333333333333 fuel=78.64499999999994"
+    },
+    {
+      "id": 17,
+      "name": "Baseline comparison reproducible",
+      "ok": true,
+      "detail": "two short runs matched on main_demo baseline"
+    },
+    {
+      "id": 18,
+      "name": "Event logs exportable",
+      "ok": true,
+      "detail": "file=/Users/abhiramn@arizona.edu/Desktop/FarmShield AI/demo_event_log.json n=86"
+    },
+    {
+      "id": 19,
+      "name": "Reset works",
+      "ok": true,
+      "detail": "mid=1 after_reset=0"
+    },
+    {
+      "id": 20,
+      "name": "No misleading fake data",
+      "ok": true,
+      "detail": "demo log marked as simulator-emitted"
+    }
+  ],
+  "passed": 20,
+  "failed": 0
+}

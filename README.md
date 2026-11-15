@@ -1,0 +1,238 @@
+# FarmShield AI
+
+Autonomous tractor fleet coordinator for the **American Tractor Company — Run the Fleet** hackathon.
+
+FarmShield AI schedules field jobs on a deterministic 2D farm, validates hard safety constraints, coordinates specialized software agents, recovers from failures without losing progress, measures productivity, and compares fairly against a first-come-first-served baseline — with a live Command Center UI.
+
+**No paid APIs. No LLMs. AgOpenWeb was not integrated** (see below).
+
+---
+
+## Problem statement
+
+Multi-tractor fleets must assign the right implement to the right field job, respect fuel and deadlines, avoid conflicting ownership, and recover when machines fail mid-work. Naive “first free tractor” policies waste priority and miss deadlines; unsafe optimizers that ignore fuel or equipment create operational fiction. Judges need a **working demo** that proves coordination, safety, memory, and measured improvement — not slideware metrics.
+
+## Solution overview
+
+FarmShield runs a **single authoritative simulator** plus a **Fleet Agent** that exhaustively matches free tractors to schedulable jobs, then commits only after **Navigation (A\*)** and **Safety** approve. Failures release jobs with **preserved work units**; Recovery requests a replan through the same gates. SQLite **operational memory** stores runs, incidents, decisions, and traces. A **Benchmark Lab** compares FCFS vs FarmShield on independent state copies under identical seeds and incidents.
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  React Command Center (Vite)                                │
+│  Fleet · Missions · Chaos · Intelligence · Agents · Bench   │
+└───────────────────────────┬─────────────────────────────────┘
+                            │ HTTP /api/*
+┌───────────────────────────▼─────────────────────────────────┐
+│  FastAPI                                                    │
+│  simulation · orchestration (AgentBus) · chaos · metrics    │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌───────────────┐   │
+│  │ Fleet    │→│ Nav A*   │→│ Safety   │→│ Recovery      │   │
+│  │ matching │ │ routes   │ │ validate │ │ replan advise │   │
+│  └──────────┘ └──────────┘ └──────────┘ └───────────────┘   │
+│  SQLite operational memory · productivity ledger · FCFS     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+| Module | Role |
+| --- | --- |
+| `simulation.py` | Deterministic 1-minute ticks, fuel, travel, work, events |
+| `scheduler.py` | Exhaustive scored matching (FarmShield) |
+| `baseline.py` | FCFS planner (same feasibility + Safety commit path) |
+| `navigation.py` | A* routes |
+| `safety.py` | Hard constraints + lateness warnings |
+| `orchestration.py` | AgentBus, schedule_and_apply, breakdown/repair/replan |
+| `memory.py` | SQLite append-only history |
+| `metrics.py` | Wall-clock agent latency + productivity ledger |
+| `benchmark.py` | Fair FCFS vs FarmShield harness |
+| `chaos.py` | Seeded disruptions |
+
+## Stack
+
+| Layer | Technology |
+| --- | --- |
+| Frontend | React 19, TypeScript, Vite, Tailwind CSS 4, Recharts, Lucide |
+| Backend | Python 3.12, FastAPI, Pydantic, Uvicorn |
+| Database | SQLite (`backend/data/farmshield.db`) |
+| Simulation | Custom deterministic 2D grid |
+
+## Setup
+
+```bash
+# Python
+python3.12 -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+# Frontend
+cd frontend && npm install && cd ..
+```
+
+## How to run
+
+**Terminal 1 — API**
+
+```bash
+source .venv/bin/activate
+cd backend
+uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+**Terminal 2 — UI**
+
+```bash
+cd frontend
+npm run dev -- --host 127.0.0.1 --port 5173
+```
+
+Open **http://127.0.0.1:5173**. Health: `curl http://127.0.0.1:8000/api/health`.
+
+Production frontend build:
+
+```bash
+cd frontend && npm run build
+```
+
+## How to trigger incidents
+
+| Action | UI | API |
+| --- | --- | --- |
+| Breakdown | Command Center / Chaos Lab | `POST /api/events/breakdown` `{"tractor_id":"tractor_01"}` |
+| Repair | same | `POST /api/events/repair` |
+| Block route | Chaos Lab | `POST /api/events/block-route` `{"x":7,"y":7}` |
+| Fuel change | Chaos Lab | `POST /api/events/fuel-change` |
+| Priority change | Chaos Lab | `POST /api/events/priority-change` |
+| Random chaos | Chaos Lab | `POST /api/chaos/random` `{"seed":42}` |
+| Replan | API / recovery flows | `POST /api/replan` |
+
+## Scheduling algorithm (FarmShield)
+
+1. Collect **free idle** tractors and **schedulable** pending jobs (dependencies met).
+2. Score every feasible pair (`evaluate_pair`: equipment, reachability, fuel + safety reserve).
+3. Weights: priority reward, deadline urgency, lateness penalty, travel / unproductive time.
+4. Exhaustive matching: maximize assignment count, then total score, then deterministic lex tie-break.
+5. For each planned assignment: Nav route → Safety validate → `assign_job` (or skip).
+
+**FCFS baseline:** jobs in scenario submission order; first feasible free tractor (scenario tractor order); **same** Nav + Safety commit path. Not handicapped.
+
+## Agent communication design
+
+`AgentBus` wraps in-process calls with `time.perf_counter()` latency. Each hop records an `AgentTrace` (sender, receiver, request/response types, status, `correlation_id`, optional `decision_id`, simulation timestamp). Transport is explicitly `in_process` — not a fabricated network RPC. Traces persist to SQLite and appear on the Agent Network page.
+
+## Operational memory design
+
+SQLite tables: `simulation_runs`, `tractor_events`, `job_events`, `assignments`, `incidents`, `agent_traces`, `scheduling_decisions`, `performance_summaries`. Append-only. Reset starts a new `run_id` and clears ephemeral recovery logs; historical rows remain. Tractor profiles surface recurrence warnings from stored incident counts only — no invented predictions.
+
+## Safety constraints
+
+Hard reject (assignment not committed):
+
+- Missing tractor/job; broken tractor; tractor not idle/unassigned
+- Job already owned / not pending; reservation conflicts in-cycle
+- Incompatible implement vs job type
+- Work regression / progress mismatch on recovery proposals
+- Unreachable field; insufficient fuel for travel + remaining work + **safety reserve**
+
+Warnings (allowed): predicted finish past deadline (`unavoidable_lateness`).
+
+## Metrics definitions
+
+| Metric | Definition |
+| --- | --- |
+| Fleet utilization | `work / (work + travel + idle)`; broken time excluded; 0 if available=0 |
+| Productive work | Minutes in `WORKING` |
+| Travel / idle | Travel separate from work; idle = operational neither travel nor work |
+| Priority-weighted work | `Σ work_units × (6 − min(priority, 5))` |
+| Missed deadlines | Late completions + incomplete jobs past deadline |
+| Fuel consumed | Travel + work burn only (chaos fuel edits excluded) |
+| Agent latency | Wall-clock AgentBus duration (not simulated minutes) |
+| Safety violations (benchmark) | Hard Safety rejections during commit |
+
+## Real benchmark results
+
+Generated by `app.benchmark.run_benchmark(horizon=300, variant_count=20)` on independent sim copies. Files: `benchmark_results.json`, `benchmark_results.csv` (repo root + `backend/data/`).
+
+**Averages across 21 scenarios (1 main + 20 seeded variants):**
+
+| Metric | FCFS | FarmShield | Δ% |
+| --- | ---: | ---: | ---: |
+| Jobs completed | 9.86 | 10.00 | **+1.45%** |
+| On-time completions | 9.86 | 10.00 | **+1.45%** |
+| Priority-weighted work | 236.1 | 239.1 | **+1.29%** |
+| Idle time | 741.0 | 735.1 | **−0.80%** |
+| Missed deadlines | 0.14 | 0.00 | **−100%** |
+| Travel time | 67.1 | 72.3 | +7.66% (FarmShield worse) |
+| Fuel consumed | 70.5 | 74.8 | +6.15% (FarmShield worse) |
+| Safety violations | 0 | 0 | tie |
+
+FarmShield finishes more (and more on-time) priority-weighted work with fewer misses, at the cost of more travel/fuel on this scenario family. Scenario majority score (counting all metrics equally) favors FCFS because travel/fuel tip the count — reported honestly, not hidden.
+
+Re-run:
+
+```bash
+source .venv/bin/activate
+cd backend
+python -c "from app.benchmark import run_benchmark; run_benchmark()"
+```
+
+## AgOpenWeb integration
+
+**Not integrated.** FarmShield uses a custom deterministic grid simulator suitable for hackathon demos and reproducible benchmarks. No AgOpenGPS / AgOpenWeb bridge, ROS, or ISOBUS stack is claimed.
+
+## Known limitations
+
+- Small fleet exhaustive matching; not scaled to hundreds of tractors.
+- Travel is grid A* with shared obstacles; no continuous kinematics or collision cones between tractors.
+- Refueling model is minimal; depot fill is one-tick.
+- Benchmark “scenario wins” count every metric equally (travel/fuel can outweigh completion gains).
+- Live Command Center and headless benchmark use separate sim instances; running a long benchmark while demoing may contend for CPU only (isolated sims do not mutate the live API state).
+- No cloud deploy or GitHub push is part of this package unless you add it yourself.
+
+## Submission artifacts
+
+| File | Description |
+| --- | --- |
+| `README.md` | This document |
+| `backend/data/scenario.json` | Seeded demo farm |
+| `demo_event_log.json` | Real simulator event export from demo timeline |
+| `benchmark_results.json` / `.csv` | Measured FCFS vs FarmShield |
+| `requirements.txt` | Python deps |
+| `package.json` | Root npm scripts → `frontend/` |
+| `frontend/package.json` | UI dependencies |
+| `.gitignore` | venv, node_modules, db, dist |
+| `demo_script.md` | 90-second judge walkthrough |
+
+Regenerate demo log + checklist:
+
+```bash
+source .venv/bin/activate
+cd backend && python scripts/generate_demo_and_verify.py
+```
+
+## Key API routes
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| GET | `/api/health` | Liveness |
+| GET | `/api/state` | Authoritative sim state |
+| POST | `/api/simulation/{reset,step,play,pause}` | Control |
+| POST | `/api/schedule` | Plan + apply |
+| GET | `/api/agents/traces` | AgentBus traces |
+| GET | `/api/metrics/productivity` | Fleet productivity |
+| GET | `/api/metrics/agents` | Coordination metrics |
+| GET | `/api/metrics/timeline` | Series + decision traces |
+| POST | `/api/benchmark/run` | Fair benchmark |
+| GET | `/api/benchmark/export` | JSON/CSV payload |
+| GET | `/api/memory/*` | Incidents, runs, tractor profile |
+
+## Tests
+
+```bash
+source .venv/bin/activate
+cd backend && python -m pytest -q
+```
+
+---
+
+Built for ATC Run the Fleet — working demo over complexity.
