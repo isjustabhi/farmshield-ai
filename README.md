@@ -312,7 +312,9 @@ We do **not** claim real tractor control or fabricated GPS streams. Default stat
 | `package.json` | Root npm scripts → `frontend/` |
 | `frontend/package.json` | UI dependencies |
 | `.gitignore` | venv, node_modules, db, dist |
-| `demo_script.md` | 90-second judge walkthrough |
+| `demo_script.md` | 90-second judge walkthrough (full product) |
+| `demo_script_agents.md` | 90-second walkthrough focused on agent orchestration |
+| `docs/ARCHITECTURE.md` | Agents, AgentBus, APIs |
 
 Regenerate demo log + checklist:
 
