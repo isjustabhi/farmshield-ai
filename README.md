@@ -101,6 +101,16 @@ Production frontend build:
 cd frontend && npm run build
 ```
 
+### Static site (GitHub Pages)
+
+The React UI can be published as a **static** site (no FastAPI on Pages).  
+Live sim still needs the API locally or on a host.
+
+After push to `main`, Actions deploys:  
+**https://isjustabhi.github.io/farmshield-ai/**
+
+Repo → Settings → Pages → Source: **GitHub Actions** (once).
+
 ## How to trigger incidents
 
 | Action | UI | API |
